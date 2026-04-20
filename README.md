@@ -15,23 +15,20 @@
 
 ```
 ~/.claude/skills/a-share-event-analysis/
-├── SKILL.md              ← Claude Code 入口（会自动加载 references/）
-├── SKILL-BUNDLED.md      ← Codex/Copilot/其他平台专用（自包含单文件）
+├── SKILL.md              ← 自包含单文件，所有平台共用
 ├── README.md
-├── references/
-│   └── templates.md      ← 20 模板全文
 ├── examples/             ← 3 篇产出样例
 └── export/               ← 生成的页面代码
 ```
 
-## 平台加载差异（重要）
+## 跨平台使用
 
-| 平台 | 加载文件 | 说明 |
-|---|---|---|
-| **Claude Code** | `SKILL.md` | 自动跟随 `references/templates.md`，渐进加载 |
-| **Codex / Copilot CLI / 其他** | **`SKILL-BUNDLED.md`** | 自包含单文件，含全部 20 模板正文，无外部依赖 |
+**`SKILL.md` 为自包含单文件**（含完整工作流 + 四条合规红线 + 20 子类模板正文），任何平台直接加载本文件即可：
 
-> Codex 用户若误加载 SKILL.md，AI 拿不到 5 维度/字数/Prompt 正文，解读效果会显著退化。**务必用 SKILL-BUNDLED.md**。
+| 平台 | 调用方式 |
+|---|---|
+| Claude Code | 将本目录放入 `~/.claude/skills/` 自动识别 |
+| Codex / Copilot CLI / Cursor / 其他 | 在提示词中指向 `SKILL.md` 路径即可 |
 
 ## 触发
 
