@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>闪电破人类纪录，人形机器人再沸</title>
+<style>
+  :root {
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+
+    --core: #2563eb;     --core-bg: #eff6ff;     --core-soft: #dbeafe;
+    --benefit: #059669;  --benefit-bg: #ecfdf5;  --benefit-soft: #d1fae5;
+    --market: #ea580c;   --market-bg: #fff7ed;   --market-soft: #fed7aa;
+    --history: #7c3aed;  --history-bg: #f5f3ff;  --history-soft: #ddd6fe;
+    --risk: #dc2626;     --risk-bg: #fef2f2;     --risk-soft: #fecaca;
+    --gold: #f59e0b;     --gold-bg: #fffbeb;
+
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15.5px;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  /* ============ Hero ============ */
+  .hero {
+    background: linear-gradient(135deg, #4338ca 0%, #7c3aed 50%, #c026d3 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-title {
+    font-size: 26px; font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 400;
+    margin: 0 0 14px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta {
+    display: flex; gap: 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta span::before { content: "·  "; }
+  .hero-meta span:first-child::before { content: ""; }
+
+  /* ============ Floor (共用) ============ */
+  .floor {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    border: 1px solid var(--border);
+  }
+  .floor-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .floor-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    color: #fff;
+  }
+  .floor-title {
+    font-size: 17px; font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    flex: 1;
+  }
+  .floor-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .floor-1 .floor-num { background: var(--core); }
+  .floor-1 .floor-tag { background: var(--core-bg); color: var(--core); }
+  .floor-2 .floor-num { background: var(--benefit); }
+  .floor-2 .floor-tag { background: var(--benefit-bg); color: var(--benefit); }
+  .floor-3 .floor-num { background: var(--market); }
+  .floor-3 .floor-tag { background: var(--market-bg); color: var(--market); }
+  .floor-4 .floor-num { background: var(--history); }
+  .floor-4 .floor-tag { background: var(--history-bg); color: var(--history); }
+  .floor-5 .floor-num { background: var(--risk); }
+  .floor-5 .floor-tag { background: var(--risk-bg); color: var(--risk); }
+
+  .lead-text {
+    font-size: 14.5px; color: var(--muted); line-height: 1.75;
+    margin: 0 0 16px;
+  }
+
+  /* ============ Floor 1 · 技术突破 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat {
+    background: var(--core-bg);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 20px; font-weight: 700;
+    color: var(--core);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .stat-sub {
+    font-size: 10.5px;
+    color: var(--core);
+    margin-top: 2px;
+    opacity: 0.7;
+  }
+  .podium-caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 4px 0 10px;
+    font-weight: 600;
+  }
+  .podium {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    align-items: end;
+    margin-bottom: 8px;
+  }
+  .podium-item {
+    background: linear-gradient(180deg, #fefce8 0%, #fef08a 100%);
+    border-radius: 10px 10px 0 0;
+    padding: 12px 8px;
+    text-align: center;
+    border-bottom: 3px solid var(--gold);
+  }
+  .podium-item.second { background: linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%); border-bottom-color: #94a3b8; }
+  .podium-item.third { background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%); border-bottom-color: #d97706; }
+  .podium-rank {
+    font-size: 12px;
+    font-weight: 700;
+    color: #78350f;
+    margin-bottom: 4px;
+  }
+  .podium-time {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+  }
+  .podium-team {
+    font-size: 11px;
+    color: #78350f;
+    margin-top: 2px;
+  }
+  .podium-bar {
+    height: 50px;
+  }
+  .podium-bar.first { height: 68px; }
+  .podium-bar.third { height: 38px; }
+
+  /* ============ Floor 2 · 产业链观察 ============ */
+  .chain-layer {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    background: var(--benefit-bg);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--benefit);
+  }
+  .chain-layer:last-child { margin-bottom: 0; }
+  .chain-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--benefit);
+    color: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .chain-body { flex: 1; }
+  .chain-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--benefit);
+    margin: 0 0 8px;
+  }
+  .chain-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .chain-chip {
+    background: #fff;
+    color: #065f46;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    border: 1px solid var(--benefit-soft);
+  }
+  .chain-chip.alpha {
+    background: var(--benefit);
+    color: #fff;
+    border-color: var(--benefit);
+    font-weight: 600;
+  }
+  .benefit-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 12px 0 0;
+    font-style: italic;
+  }
+
+  /* ============ Floor 3 · 竞争格局 ============ */
+  .competition-block {
+    margin-bottom: 14px;
+  }
+  .competition-block:last-child { margin-bottom: 0; }
+  .block-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--market);
+    margin: 0 0 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .block-label::before {
+    content: "";
+    width: 3px; height: 14px;
+    background: var(--market);
+    border-radius: 2px;
+  }
+  .players {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .player {
+    background: var(--market-bg);
+    color: var(--market);
+    border: 1px solid var(--market-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .player.cross {
+    background: var(--market);
+    color: #fff;
+    border-color: var(--market);
+  }
+  .status-row {
+    display: flex; gap: 10px;
+    padding: 10px 14px;
+    background: var(--market-bg);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #7c2d12;
+    align-items: center;
+  }
+  .status-row .icon {
+    font-size: 16px;
+  }
+
+  /* ============ Floor 4 · 行情观察 ============ */
+  .period-block {
+    background: var(--history-bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--history);
+  }
+  .period-label {
+    display: inline-block;
+    background: var(--history);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .period-text {
+    font-size: 13.5px;
+    color: #3730a3;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--history-bg);
+    color: var(--history);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--history-soft);
+  }
+  .chip-num {
+    background: var(--history);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .sub-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 12px 0 6px;
+  }
+
+  /* ============ Floor 5 · 风险 ============ */
+  .risk-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .risk-item {
+    display: flex; gap: 10px;
+    padding: 10px 12px;
+    background: var(--risk-bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--risk);
+    font-size: 13.5px;
+    color: #7f1d1d;
+    line-height: 1.65;
+  }
+  .risk-item-num {
+    flex-shrink: 0;
+    background: var(--risk);
+    color: #fff;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ============ Footer ============ */
+  .footer {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-top: 14px;
+    border: 1px solid var(--border);
+  }
+  .sources-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sources-title::before {
+    content: "";
+    width: 3px; height: 14px;
+    background: var(--history);
+    border-radius: 2px;
+  }
+  .sources-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .sources-list li {
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .sources-list li:last-child { border-bottom: none; }
+  .sources-list a {
+    color: var(--history);
+    text-decoration: none;
+  }
+  .sources-list a:hover { text-decoration: underline; }
+  .disclaimer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  /* ============ 移动端 ============ */
+  @media (max-width: 640px) {
+    .page { padding: 16px 12px 40px; }
+    .hero { padding: 22px 18px; }
+    .hero-title { font-size: 22px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="hero-badge">7A · 科技重大突破 · 具身智能</span>
+    <h1 class="hero-title">闪电破人类纪录，人形机器人再沸</h1>
+    <p class="hero-subtitle">荣耀包揽半马前六，具身智能是情绪催化还是产业拐点？</p>
+    <div class="hero-meta">
+      <span>赛事时点：2026-04-19</span>
+      <span>撰写时点：2026-04-20</span>
+      <span>全文约 500 字</span>
+    </div>
+  </header>
+
+  <!-- Floor 1 · 技术突破意义 -->
+  <section class="floor floor-1">
+    <div class="floor-head">
+      <span class="floor-num">1</span>
+      <h2 class="floor-title">技术突破意义</h2>
+      <span class="floor-tag">关键数据</span>
+    </div>
+    <p class="lead-text">2026年4月19日北京亦庄人形机器人半程马拉松，荣耀"齐天大圣"队"闪电"机器人<strong>以 50:26 夺冠，打破人类半马世界纪录（57:20）并包揽前六</strong>，冠亚季军均为自主导航机器人。核心突破在自研液冷散热系统、多维关节协同与续航能力，是具身智能从"实验室演示"走向"户外长程极限工况"的标志性节点。</p>
+
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-value">50:26</div>
+        <div class="stat-label">冠军成绩</div>
+        <div class="stat-sub">自主导航</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">57:20</div>
+        <div class="stat-label">人类半马世界纪录</div>
+        <div class="stat-sub">被反超</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">前 6</div>
+        <div class="stat-label">荣耀包揽</div>
+        <div class="stat-sub">3 支队伍</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">&gt;4L/min</div>
+        <div class="stat-label">自研液冷换热</div>
+        <div class="stat-sub">关键突破</div>
+      </div>
+    </div>
+
+    <p class="podium-caption">冠亚季军 · 三支战队同台</p>
+    <div class="podium">
+      <div class="podium-item second">
+        <div class="podium-bar second">
+          <div class="podium-rank">🥈 亚军</div>
+          <div class="podium-time">50:56</div>
+          <div class="podium-team">雷霆闪电队</div>
+        </div>
+      </div>
+      <div class="podium-item first">
+        <div class="podium-bar first">
+          <div class="podium-rank">🥇 冠军</div>
+          <div class="podium-time">50:26</div>
+          <div class="podium-team">齐天大圣队</div>
+        </div>
+      </div>
+      <div class="podium-item third">
+        <div class="podium-bar third">
+          <div class="podium-rank">🥉 季军</div>
+          <div class="podium-time">53:01</div>
+          <div class="podium-team">星火燎原队</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floor 2 · A股产业链观察 -->
+  <section class="floor floor-2">
+    <div class="floor-head">
+      <span class="floor-num">2</span>
+      <h2 class="floor-title">A股产业链观察</h2>
+      <span class="floor-tag">三层映射</span>
+    </div>
+
+    <div class="chain-layer">
+      <span class="chain-num">1</span>
+      <div class="chain-body">
+        <p class="chain-title">本体整机 + 大脑环节</p>
+        <div class="chain-chips">
+          <span class="chain-chip">自主导航</span>
+          <span class="chain-chip">运控算法</span>
+          <span class="chain-chip">AI 终端跨界</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-layer">
+      <span class="chain-num">2</span>
+      <div class="chain-body">
+        <p class="chain-title">核心零部件环节（产业链弹性相对集中）</p>
+        <div class="chain-chips">
+          <span class="chain-chip">谐波减速器</span>
+          <span class="chain-chip">RV 减速器</span>
+          <span class="chain-chip">行星减速器</span>
+          <span class="chain-chip">伺服电机</span>
+          <span class="chain-chip">无框力矩电机</span>
+          <span class="chain-chip">滚柱丝杠</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chain-layer">
+      <span class="chain-num">3</span>
+      <div class="chain-body">
+        <p class="chain-title">传感器 + 执行器 + 散热环节</p>
+        <div class="chain-chips">
+          <span class="chain-chip">六维力传感器</span>
+          <span class="chain-chip">直线执行器</span>
+          <span class="chain-chip">灵巧手</span>
+          <span class="chain-chip alpha">液冷 / 热管理（本次独特 α）</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="benefit-note">以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
+  </section>
+
+  <!-- Floor 3 · 国内竞争格局 -->
+  <section class="floor floor-3">
+    <div class="floor-head">
+      <span class="floor-num">3</span>
+      <h2 class="floor-title">国内竞争格局</h2>
+      <span class="floor-tag">多头并进</span>
+    </div>
+
+    <div class="competition-block">
+      <p class="block-label">本体层 · 多头并进格局</p>
+      <div class="players">
+        <span class="player">优必选</span>
+        <span class="player">小米</span>
+        <span class="player">宇树</span>
+        <span class="player">傅利叶</span>
+        <span class="player cross">荣耀</span>
+        <span class="player cross">华为</span>
+        <span class="player cross">小鹏</span>
+      </div>
+      <p class="benefit-note">🟧 深色为手机/车企等跨界派，正对纯机器人创业公司形成竞争压力。</p>
+    </div>
+
+    <div class="competition-block">
+      <p class="block-label">核心零部件 · 龙头集中态势</p>
+      <div class="status-row">
+        <span>国产替代率持续提升，谐波减速器、六维力传感器等环节已形成龙头集中态势。</span>
+      </div>
+    </div>
+
+    <div class="competition-block">
+      <p class="block-label">中外对比 · 硬件端并跑甚至部分领跑</p>
+      <div class="status-row">
+        <span>硬件端与海外并跑；部分细分环节（减速器、力传感器）或已在国际竞争中处于领先位置。</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floor 4 · 行情持续性观察 -->
+  <section class="floor floor-4">
+    <div class="floor-head">
+      <span class="floor-num">4</span>
+      <h2 class="floor-title">行情持续性观察</h2>
+      <span class="floor-tag">短期 vs 中期</span>
+    </div>
+
+    <div class="period-block">
+      <span class="period-label">短期 · 1—2 周</span>
+      <p class="period-text">情绪催化较强，跨界叙事给板块提供新 β 抓手；散热 / 液冷细分或现脉冲关注度。</p>
+    </div>
+
+    <div class="period-block">
+      <span class="period-label">中期 · 3—6 月</span>
+      <p class="period-text">与早期纯"主题炒作"不同，本轮或从主题向"订单+产能+量产"过渡；具体以行业订单与公司公告为准。</p>
+    </div>
+
+    <p class="sub-label">中期可观察的三项抓手</p>
+    <div class="chips">
+      <span class="chip"><span class="chip-num">1</span>特斯拉 Optimus 三代量产节奏</span>
+      <span class="chip"><span class="chip-num">2</span>国内 10 万级量产元年兑现进度</span>
+      <span class="chip"><span class="chip-num">3</span>CES 2026 后订单落地情况</span>
+    </div>
+  </section>
+
+  <!-- Floor 5 · 风险提示 -->
+  <section class="floor floor-5">
+    <div class="floor-head">
+      <span class="floor-num">5</span>
+      <h2 class="floor-title">风险提示</h2>
+      <span class="floor-tag">五项关注</span>
+    </div>
+    <ul class="risk-list">
+      <li class="risk-item"><span class="risk-item-num">1</span>量产节奏不达预期或拖累相关方向情绪。</li>
+      <li class="risk-item"><span class="risk-item-num">2</span>马拉松夺冠为单一赛事成绩，不等同于商业化成熟度。</li>
+      <li class="risk-item"><span class="risk-item-num">3</span>跨界入局者增多或引发价格战压缩利润率。</li>
+      <li class="risk-item"><span class="risk-item-num">4</span>监管对概念炒作的关注度升温。</li>
+      <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
+    </ul>
+  </section>
+
+  <!-- Footer · Sources + Disclaimer -->
+  <footer class="footer">
+    <p class="sources-title">信息来源</p>
+    <ul class="sources-list">
+      <li><a href="https://sz.people.com.cn/n2/2026/0419/c202846-41556690.html" target="_blank" rel="noopener">荣耀机器人"闪电"问鼎2026北京亦庄半马 · 人民网</a></li>
+      <li><a href="https://finance.sina.com.cn/tech/digi/2026-04-19/doc-inhuyvrm9529347.shtml" target="_blank" rel="noopener">50分26秒超人类世界纪录，荣耀"闪电"夺2026人形机器人半马冠军 · 新浪科技</a></li>
+      <li><a href="https://www.sohu.com/a/1011643698_211762" target="_blank" rel="noopener">荣耀机器人打破人类半马纪录：闪电包揽2026人形机器人半马冠亚季 · 搜狐</a></li>
+      <li><a href="https://www.163.com/dy/article/KQSAMUV60512B07B.html" target="_blank" rel="noopener">人形机器人半马冠军出炉 "闪电"夺冠，超越人类世界纪录 · 网易（综合新浪来源）</a></li>
+      <li><a href="http://www.news.cn/tech/20260108/46b1220e159d4f80bc6a4240eb3b47b5/c.html" target="_blank" rel="noopener">2026人形机器人产业展望：10万级量产将至 商业化元年开启 · 新华网</a></li>
+    </ul>
+    <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
+  </footer>
+
+</div>
+</body>
+</html>

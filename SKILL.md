@@ -133,21 +133,31 @@ description: |
 
 ## 跨平台适配（Codex / Copilot CLI / 其他）
 
-本 skill 的核心工具是 **Web 搜索 + 本地读写**，对宿主平台的耦合度低。适配清单：
+### ⚠️ 关键：平台对 references/ 的加载差异
+
+| 平台 | 是否自动读 `references/templates.md` | 推荐加载文件 |
+|---|---|---|
+| **Claude Code** | ✅ 自动按 skill 约定加载 | `SKILL.md`（本文件） |
+| **Codex / Copilot CLI / 其他** | ❌ 不自动跟随，需手动指路 | **`SKILL-BUNDLED.md`**（自包含单文件，含全部 20 模板正文） |
+
+> **Codex 用户请直接使用 `SKILL-BUNDLED.md`**。若只加载本 SKILL.md，AI 拿不到 5 维度/字数/Prompt 正文，解读效果会显著退化。
+
+### 工具映射
 
 | Claude Code 工具 | Codex 等价 | Copilot CLI 等价 | 说明 |
 |---|---|---|---|
 | `WebSearch` | `shell` + `curl`/`lynx` 或平台原生搜索工具 | `web_search` | 取得一级权威源正文 |
-| `Read` | `shell` + `cat` 或原生 `read_file` | `read_file` | 读 templates.md |
+| `Read` | `shell` + `cat` 或原生 `read_file` | `read_file` | 读模板/历史稿 |
 | `Edit` / `Write` | `apply_patch` / `shell` + `sed` | `edit_file` | 如需迭代模板 |
 
-Codex 使用本 skill 的最小方式：
+### Codex 使用的最小方式（自包含调用）
 
 ```
-<你的 Codex 提示词>
-请按照 /skills/a-share-event-analysis/SKILL.md 的工作流处理事件：{事件名}
+请按照 /path/to/a-share-event-analysis/SKILL-BUNDLED.md 的工作流处理事件：{事件名}
 可用工具：shell（curl 访问公开新闻）、read_file、write_file。
-合规红线：不写股票代码 / 不做走势绝对判断 / 不给操作建议。
+合规红线：不写股票代码 / 不做走势绝对判断 / 不给操作建议 / 不做板块估值区间判断。
+严格按 Step 1 分类 → Step 2 联网取数 → Step 3 按子类型模板 Prompt 生成
+         → Step 4 合规自检 → Step 5 附 Sources + 免责声明。
 ```
 
 **免责**：无论在哪个平台运行，生成稿件必须附免责声明，合规红线优先级高于风格要求。
