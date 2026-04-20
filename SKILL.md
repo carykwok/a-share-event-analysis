@@ -1,6 +1,23 @@
 ---
 name: a-share-event-analysis
-description: Use when the user wants to interpret how a hot news event, policy announcement, political meeting, geopolitical shift, tech breakthrough, black swan, overseas market move, or commodity swing impacts A-share (China stock market) — produces a structured analysis article with main/sub title, sector mapping, and risk notes following a 10-category × 20-template library. Triggers on phrases like "解读这个事件对A股", "这个新闻A股怎么看", "帮我写一篇行情解析", "某某政策出台了", or when user pastes a policy/news excerpt asking for market interpretation.
+description: |
+  Use when the user wants to interpret how a hot news event, policy announcement, political meeting, geopolitical shift, tech breakthrough, black swan, overseas market move, or commodity swing impacts A-share (China stock market). Produces a structured, compliance-safe analysis article (main title ≤15字 + subtitle + 400–550字 body + risk notes + sources + disclaimer) following a 10-category × 20-template library. Web-search first via authoritative-source tiers (Xinhua / 三大证券报 / 部委官网 > 财新/一财 > 门户), no user-provided material required.
+
+  Triggers on natural phrasing such as:
+  - "解读这个事件对A股"、"这个新闻A股怎么看"、"帮我写一篇行情解析"
+  - 短事件名 + 求解读，例如：
+      · "东方证券与上海证券合并在即"
+      · "证监会发布创业板改革意见，增设上市标准"
+      · "4月24日中国航天日揭幕"
+      · "荣耀闪电机器人马拉松夺冠"
+      · "伊朗：只要有海上封锁，就没有谈判！"
+      · "美股锂矿大涨，创三年新高"
+      · "卫星互联网建设加速"
+      · "国产AI芯片集体走强，行情逻辑是什么？"
+      · "DeepSeek融资引发投资者不同意见"
+  - 直接粘贴政策/新闻摘录，要求点评对 A 股的影响。
+
+  Compliance red lines (对客端强制): no stock codes, no absolute price predictions, no buy/sell operational advice — use hedged language (或/可能/有望) and stay at industry-chain granularity only.
 ---
 
 # A股热点事件行情解析
@@ -111,3 +128,24 @@ description: Use when the user wants to interpret how a hot news event, policy a
 | 10 | 大宗商品异动 | 原油价格暴涨/暴跌 | 工业金属/贵金属异动 |
 
 完整模板（触发场景、5 维度、字数、Prompt 正文）见 `references/templates.md`。
+
+## 跨平台适配（Codex / Copilot CLI / 其他）
+
+本 skill 的核心工具是 **Web 搜索 + 本地读写**，对宿主平台的耦合度低。适配清单：
+
+| Claude Code 工具 | Codex 等价 | Copilot CLI 等价 | 说明 |
+|---|---|---|---|
+| `WebSearch` | `shell` + `curl`/`lynx` 或平台原生搜索工具 | `web_search` | 取得一级权威源正文 |
+| `Read` | `shell` + `cat` 或原生 `read_file` | `read_file` | 读 templates.md |
+| `Edit` / `Write` | `apply_patch` / `shell` + `sed` | `edit_file` | 如需迭代模板 |
+
+Codex 使用本 skill 的最小方式：
+
+```
+<你的 Codex 提示词>
+请按照 /skills/a-share-event-analysis/SKILL.md 的工作流处理事件：{事件名}
+可用工具：shell（curl 访问公开新闻）、read_file、write_file。
+合规红线：不写股票代码 / 不做走势绝对判断 / 不给操作建议。
+```
+
+**免责**：无论在哪个平台运行，生成稿件必须附免责声明，合规红线优先级高于风格要求。
