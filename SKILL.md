@@ -178,7 +178,92 @@ description: |
 - 无 JavaScript 或仅 CSS-only 动效
 - 结尾 `<footer>` 固定免责声明
 
-#### 6.3 产物清单
+#### 6.3 楼层可视化组件库（29 个，按金融对客场景 6 族分类）
+
+`scripts/page-builder.mjs` 内置 `VIZ_REGISTRY` 分发机制，**每个楼层正文会按以下三层优先级匹配到一个可视化组件**：
+
+1. **显式触发**（最高优先级）：在正文开头插入 `<!-- viz:组件名 -->` 标签
+2. **启发式匹配**：按注册顺序扫描正文，首个结构命中即用（`explicitOnly: true` 的组件不参与）
+3. **文本兜底**：无匹配时原样渲染为段落
+
+写作时有两种策略：①用标准句式触发启发式匹配（简单文本即可得到可视化）；②用显式标签强制指定组件（图表类组件必须用此方式）。
+
+**A · 数据展示族（5）**
+
+| 组件 | 显式标签 | 启发式触发条件 | 适用场景 |
+|---|---|---|---|
+| `stat-grid` | `<!-- viz:stat-grid -->` | 2 行及以上的 Markdown 表格 | 财报三大指标、规模/同比对照 |
+| `compare-table` | `<!-- viz:compare-table -->` | 含 "对比 / vs / 较上期" 的 3+ 列表格 | A vs B 多维度对照 |
+| `kpi-card` | `<!-- viz:kpi-card -->` | "项：数字+单位，项：数字+单位"（3+ 项） | 3 个并列核心指标，带 ↑/↓ 箭头 |
+| `highlight-num` | `<!-- viz:highlight-num -->` | 仅显式 | 单个超大数字（如 "营收 128 亿"）突出 |
+| `delta-bar` | `<!-- viz:delta-bar -->` | "名称 +X%"/"名称 -X%"（4+ 条） | 涨跌幅条状对比 |
+
+**B · 关系结构族（5）**
+
+| 组件 | 显式标签 | 启发式触发条件 | 适用场景 |
+|---|---|---|---|
+| `card-grid` | `<!-- viz:card-grid -->` | "①xxx；②xxx；③xxx" 或 "1)/2)/3)" | 产业链拆解、多受益主体 |
+| `layered-chain` | `<!-- viz:layered-chain -->` | "上游：xxx 中游：xxx 下游：xxx" | 产业链三段式 |
+| `hierarchy-tree` | `<!-- viz:hierarchy-tree -->` | 仅显式（用 Markdown 无序列表分层） | 板块 → 细分 → 个股层级树 |
+| `matrix-2x2` | `<!-- viz:matrix-2x2 -->` | 仅显式（4 象限标题语法） | BCG 矩阵、SWOT、风险-收益四象限 |
+| `vs-panel` | `<!-- viz:vs-panel -->` | "A：xxx B：xxx" 双阵营句式 | 多空对决、政策支持 vs 压力 |
+
+**C · 时序流程族（5）**
+
+| 组件 | 显式标签 | 启发式触发条件 | 适用场景 |
+|---|---|---|---|
+| `flow` | `<!-- viz:flow -->` | "xxx → yyy → zzz" 含 `→` 箭头链 | 政策→需求→产能→业绩传导链 |
+| `timeline-h` | `<!-- viz:timeline-h -->` | "2026年1月：xxx；2026年2月：xxx" 日期链 | 事件时序、政策节奏 |
+| `timeline-v` | `<!-- viz:timeline-v -->` | 仅显式 | 较多节点（5+）的竖向时间轴 |
+| `period-cards` | `<!-- viz:period-cards -->` | "短期：xxx 中期：xxx 长期：xxx" | 三段式展望 |
+| `podium` | `<!-- viz:podium -->` | "第一/第二/第三：xxx" 或排名句式 | Top 3 龙头排名、市占率前三 |
+
+**D · 信号标签族（5）**
+
+| 组件 | 显式标签 | 启发式触发条件 | 适用场景 |
+|---|---|---|---|
+| `chips` | `<!-- viz:chips -->` | "xxx、yyy、zzz" 或 "xxx / yyy / zzz"（4+ 项） | 受益标的、热门题材胶囊 |
+| `pros-cons` | `<!-- viz:pros-cons -->` | "正向：xxx 反向：xxx" 或 "利多/利空" | 多空观点正反面 |
+| `progress-bars` | `<!-- viz:progress-bars -->` | "xxx 40%；yyy 30%"（3+ 条，总和非饼状） | 占比排行、进度条 |
+| `callout` | `<!-- viz:callout -->` | "**关键判断**：xxx" 或 "结论：xxx" | 单段强调结论、关键判断 |
+| `tag-cloud` | `<!-- viz:tag-cloud -->` | 仅显式 | 大量标签（10+），按权重字号缩放 |
+
+**E · 图表族（5，均需显式标签 · SVG 内联）**
+
+| 组件 | 显式标签 | 数据格式 | 适用场景 |
+|---|---|---|---|
+| `pie-chart` | `<!-- viz:pie-chart -->` | "A 40%；B 30%；C 20%；D 10%"（百分比总和 ≈ 100） | 市场份额、收入结构饼图 |
+| `donut` | `<!-- viz:donut -->` | 同上 | 中空样式的市占率、资金分布 |
+| `bar-chart` | `<!-- viz:bar-chart -->` | "类目 +X%；类目 -Y%"（含正负） | 板块涨跌、横向柱状对比 |
+| `sparkline` | `<!-- viz:sparkline -->` | 逗号分隔数字序列 "12,14,18,22,30" | 微型趋势线、无坐标轴缩略图 |
+| `heatmap` | `<!-- viz:heatmap -->` | 表格数据（数值） | 行业涨跌热力图、相关性矩阵 |
+
+**F · 特殊族（4）**
+
+| 组件 | 显式标签 | 启发式触发条件 | 适用场景 |
+|---|---|---|---|
+| `quote-block` | `<!-- viz:quote-block -->` | 仅显式（"> 引文 —— 作者"） | 专家观点、研报金句引用 |
+| `scenario` | `<!-- viz:scenario -->` | "乐观情景：xxx 中性情景：xxx 悲观情景：xxx" | 三档预期推演（自动排序） |
+| `venn` | `<!-- viz:venn -->` | 仅显式（3 集合语法） | 三要素交集（政策×需求×技术） |
+| `map-tag` | `<!-- viz:map-tag -->` | 仅显式（地域标签语法） | 地域分布标签云 |
+
+**另**：`risk-list` 为风险提示专用组件，**固定用于 Floor 5**（触发句 "**风险提示**：①xxx；②xxx" 或正文含 5 项编号列表），红底边条样式，不参与 VIZ_REGISTRY 分发。
+
+#### 6.4 楼层组件选型指引
+
+每个楼层按承载内容选择优先组件：
+
+| 楼层 | 首选组件 | 备选组件 |
+|---|---|---|
+| Floor 1 核心事实 | `kpi-card`（3 指标） / `stat-grid`（表格） / `highlight-num`（单大数字） | `compare-table` / `delta-bar` |
+| Floor 2 产业链拆解 | `layered-chain`（上中下游） / `card-grid`（多主体） | `hierarchy-tree` / `matrix-2x2` |
+| Floor 3 市场节奏 | `timeline-h`（事件时序） / `period-cards`（三段展望） | `chips` / `progress-bars` / `bar-chart` |
+| Floor 4 历史对标 / 判断 | `flow`（传导链） / `scenario`（三情景） / `vs-panel`（正反） | `pros-cons` / `callout` / `pie-chart` / `donut` |
+| Floor 5 风险提示 | `risk-list`（固定） | — |
+
+写作时优先使用启发式触发（让组件从自然句式中自动匹配），**仅在启发式无法命中或需要 SVG 图表时才显式插入 `<!-- viz:xxx -->` 标签**。两份画廊样例见 `docs/gallery/01-viz-gallery-data-relation.md` 和 `02-viz-gallery-chart-signal.md`。
+
+#### 6.5 产物清单
 
 | 路径 | 内容 |
 |---|---|
