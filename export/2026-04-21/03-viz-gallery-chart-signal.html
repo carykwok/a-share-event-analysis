@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>iPhone17量产提速，果链再受聚焦</title>
+<title>组件画廊 · 图表与信号族</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@500;700&display=swap');
   :root {
@@ -12,11 +12,11 @@
     --border: #e2e8f0;
     --bg: #f8fafc;
     --card: #ffffff;
-    --hero-1: #18181b;
-    --hero-2: #27272a;
-    --hero-3: #84cc16;
-    --accent: #65a30d;
-    --accent-bg: #ecfccb;
+    --hero-1: #0f766e;
+    --hero-2: #10b981;
+    --hero-3: #a7f3d0;
+    --accent: #047857;
+    --accent-bg: #d1fae5;
     --risk: #dc2626;
     --risk-bg: #fef2f2;
     --font-cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
@@ -32,8 +32,8 @@
     margin: 0; padding: 0;
     font-family: var(--font-cn);
     background:
-      radial-gradient(at 85% 10%, rgba(101, 163, 13, 0.08) 0%, transparent 50%),
-      radial-gradient(at 15% 90%, rgba(132, 204, 22, 0.08) 0%, transparent 50%),
+      radial-gradient(at 85% 10%, rgba(4, 120, 87, 0.08) 0%, transparent 50%),
+      radial-gradient(at 15% 90%, rgba(167, 243, 208, 0.08) 0%, transparent 50%),
       var(--bg);
     color: var(--text);
     line-height: 1.75;
@@ -51,7 +51,7 @@
     border-radius: 20px;
     padding: 34px 28px 30px 28px;
     margin-bottom: 18px;
-    box-shadow: 0 14px 40px rgba(39, 39, 42, 0.35);
+    box-shadow: 0 14px 40px rgba(16, 185, 129, 0.35);
     position: relative;
     overflow: hidden;
     animation: rise 0.6s ease-out 0.05s both;
@@ -129,7 +129,7 @@
     font-family: var(--font-mono);
     color: #fff;
     background: var(--accent);
-    box-shadow: 0 2px 6px rgba(101, 163, 13, 0.25);
+    box-shadow: 0 2px 6px rgba(4, 120, 87, 0.25);
   }
   .floor-num-risk { background: var(--risk); box-shadow: 0 2px 6px rgba(220,38,38,0.25); }
   .floor-title {
@@ -176,7 +176,7 @@
     margin: 6px 0 4px;
   }
   .stat {
-    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(101, 163, 13, 0.06) 100%);
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(4, 120, 87, 0.06) 100%);
     border-radius: 12px;
     padding: 14px 12px;
     text-align: center;
@@ -260,7 +260,7 @@
     padding: 10px 8px;
     background: var(--card);
     border-radius: 8px;
-    border: 1px solid rgba(101, 163, 13, 0.2);
+    border: 1px solid rgba(4, 120, 87, 0.2);
     font-size: 12.5px;
     font-weight: 600;
     color: var(--accent);
@@ -285,7 +285,7 @@
     border-radius: 999px;
     font-size: 13px;
     font-weight: 500;
-    border: 1px solid rgba(101, 163, 13, 0.2);
+    border: 1px solid rgba(4, 120, 87, 0.2);
   }
   .chip-num {
     background: var(--accent);
@@ -326,7 +326,7 @@
   /* ============ KPI Card · 带箭头方向 ============ */
   .kpi-card {
     display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(101, 163, 13, 0.1) 100%);
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(4, 120, 87, 0.1) 100%);
     padding: 22px 20px; border-radius: 14px;
     border-left: 4px solid var(--accent);
   }
@@ -353,7 +353,7 @@
     text-align: center; padding: 26px 12px;
     background: linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 100%);
     border-radius: 16px; color: #fff;
-    box-shadow: 0 6px 20px rgba(39, 39, 42, 0.25);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25);
   }
   .highlight-value {
     font-family: var(--font-display);
@@ -373,7 +373,7 @@
   }
   .compare-head {
     display: grid; grid-template-columns: 1fr auto 1fr;
-    background: linear-gradient(90deg, rgba(101, 163, 13, 0.12), rgba(132, 204, 22, 0.12));
+    background: linear-gradient(90deg, rgba(4, 120, 87, 0.12), rgba(167, 243, 208, 0.12));
     padding: 10px 0;
   }
   .compare-head-cell {
@@ -406,13 +406,13 @@
     background: var(--card); border: 1px solid var(--border);
   }
   .vs-a { border-left: 4px solid var(--accent); }
-  .vs-b { border-left: 4px solid #84cc16; }
+  .vs-b { border-left: 4px solid #a7f3d0; }
   .vs-side-title {
     font-weight: 700; font-size: 14px;
     margin-bottom: 8px; color: var(--accent);
     font-family: var(--font-display);
   }
-  .vs-b .vs-side-title { color: #84cc16; }
+  .vs-b .vs-side-title { color: #a7f3d0; }
   .vs-side-desc { font-size: 13px; color: #334155; line-height: 1.75; }
   .vs-divider {
     align-self: center; padding: 8px 10px;
@@ -431,9 +431,9 @@
     overflow: hidden;
     border-left: 3px solid var(--accent);
   }
-  .chain-layer-1 { border-left-color: #18181b; }
-  .chain-layer-2 { border-left-color: #27272a; }
-  .chain-layer-3 { border-left-color: #84cc16; }
+  .chain-layer-1 { border-left-color: #0f766e; }
+  .chain-layer-2 { border-left-color: #10b981; }
+  .chain-layer-3 { border-left-color: #a7f3d0; }
   .chain-key {
     background: var(--accent);
     color: #fff; font-weight: 700;
@@ -441,9 +441,9 @@
     font-family: var(--font-display); font-size: 13px;
     display: flex; align-items: center; justify-content: center;
   }
-  .chain-layer-1 .chain-key { background: #18181b; }
-  .chain-layer-2 .chain-key { background: #27272a; }
-  .chain-layer-3 .chain-key { background: #84cc16; }
+  .chain-layer-1 .chain-key { background: #0f766e; }
+  .chain-layer-2 .chain-key { background: #10b981; }
+  .chain-layer-3 .chain-key { background: #a7f3d0; }
   .chain-desc {
     padding: 10px 14px; font-size: 13px; color: #334155; line-height: 1.7;
   }
@@ -466,7 +466,7 @@
     background: var(--card);
     padding: 4px 10px; border-radius: 6px;
     font-size: 12px; color: #334155;
-    border: 1px solid rgba(101, 163, 13, 0.25);
+    border: 1px solid rgba(4, 120, 87, 0.25);
   }
 
   /* ============ Matrix 2x2 · 四象限 ============ */
@@ -501,7 +501,7 @@
     content: ""; position: absolute;
     left: 20px; right: 20px; top: 28px;
     height: 2px;
-    background: rgba(101, 163, 13, 0.3);
+    background: rgba(4, 120, 87, 0.3);
     z-index: 0;
   }
   .tl-node {
@@ -513,7 +513,7 @@
     border-radius: 50%;
     background: var(--accent);
     margin: 0 auto 10px;
-    box-shadow: 0 0 0 4px var(--card), 0 2px 6px rgba(101, 163, 13, 0.4);
+    box-shadow: 0 0 0 4px var(--card), 0 2px 6px rgba(4, 120, 87, 0.4);
   }
   .tl-date {
     font-family: var(--font-mono); font-size: 11.5px;
@@ -529,12 +529,12 @@
   .tv-dot {
     width: 14px; height: 14px; border-radius: 50%;
     background: var(--accent); margin-top: 4px;
-    box-shadow: 0 0 0 3px var(--card), 0 2px 6px rgba(101, 163, 13, 0.3);
+    box-shadow: 0 0 0 3px var(--card), 0 2px 6px rgba(4, 120, 87, 0.3);
     flex-shrink: 0;
   }
   .tv-line {
     width: 2px; flex: 1; margin-top: 4px;
-    background: rgba(101, 163, 13, 0.3);
+    background: rgba(4, 120, 87, 0.3);
     min-height: 20px;
   }
   .tv-body { padding-bottom: 18px; padding-top: 2px; }
@@ -552,9 +552,9 @@
     border-top: 3px solid var(--accent);
     text-align: center;
   }
-  .period-card:nth-child(1) { border-top-color: #18181b; background: rgba(24, 24, 27, 0.08); }
-  .period-card:nth-child(2) { border-top-color: #27272a; background: rgba(39, 39, 42, 0.08); }
-  .period-card:nth-child(3) { border-top-color: #84cc16; background: rgba(132, 204, 22, 0.1); }
+  .period-card:nth-child(1) { border-top-color: #0f766e; background: rgba(15, 118, 110, 0.08); }
+  .period-card:nth-child(2) { border-top-color: #10b981; background: rgba(16, 185, 129, 0.08); }
+  .period-card:nth-child(3) { border-top-color: #a7f3d0; background: rgba(167, 243, 208, 0.1); }
   .period-key {
     font-family: var(--font-display);
     font-size: 14.5px; font-weight: 700;
@@ -606,7 +606,7 @@
   }
   .pb-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--accent), rgba(132, 204, 22, 0.8));
+    background: linear-gradient(90deg, var(--accent), rgba(167, 243, 208, 0.8));
     border-radius: 999px;
     transition: width 0.6s ease-out;
   }
@@ -623,7 +623,7 @@
   }
   .db-label { font-size: 12.5px; color: #334155; }
   .db-track {
-    position: relative; height: 18px; background: rgba(101, 163, 13, 0.05); border-radius: 4px;
+    position: relative; height: 18px; background: rgba(4, 120, 87, 0.05); border-radius: 4px;
   }
   .db-axis {
     position: absolute; left: 50%; top: 0; bottom: 0;
@@ -646,7 +646,7 @@
   .callout {
     display: grid; grid-template-columns: auto 1fr; gap: 12px;
     padding: 14px 16px;
-    background: linear-gradient(90deg, rgba(101, 163, 13, 0.1), transparent);
+    background: linear-gradient(90deg, rgba(4, 120, 87, 0.1), transparent);
     border-left: 4px solid var(--accent);
     border-radius: 10px;
     align-items: start;
@@ -672,7 +672,7 @@
     padding: 5px 12px; border-radius: 999px;
     background: var(--accent-bg);
     color: var(--accent);
-    border: 1px solid rgba(101, 163, 13, 0.25);
+    border: 1px solid rgba(4, 120, 87, 0.25);
     font-weight: 500;
   }
   .tc-sm { font-size: 11.5px; opacity: 0.75; }
@@ -739,7 +739,7 @@
   /* ============ Quote Block · 官方引用 ============ */
   .quote-block {
     margin: 0; padding: 18px 20px 18px 44px;
-    background: rgba(101, 163, 13, 0.06);
+    background: rgba(4, 120, 87, 0.06);
     border-radius: 12px; position: relative;
     border-left: 3px solid var(--accent);
   }
@@ -896,99 +896,159 @@
 <body>
 <div class="page">
   <header class="hero">
-    <span class="hero-badge">7A · AI/芯片/算力突破</span>
-    <h1 class="hero-title">iPhone17量产提速，果链再受聚焦</h1>
-    <p class="hero-subtitle">1亿台出货目标驱动产业链，哪些环节值得产业链聚焦？</p>
+    <span class="hero-badge">10B · 工业金属/贵金属异动</span>
+    <h1 class="hero-title">组件画廊 · 图表与信号族</h1>
+    <p class="hero-subtitle">展示信号标签族、图表族、特殊族的 15 个可视化组件</p>
     <div class="hero-meta">
-      <span>事件 · 2026-04-20</span>
-      <span>撰写 · 2026-04-20</span>
-      <span>500 字</span>
+      <span>事件 · 2026-04-21</span>
+      <span>撰写 · 2026-04-21</span>
+      <span>420 字</span>
     </div>
   </header>
 
   <section class="floor floor-1" style="animation-delay: 0.15s;">
     <div class="floor-head">
       <span class="floor-num">1</span>
-      <h2 class="floor-title">事件核心</h2>
+      <h2 class="floor-title">板块涨跌全景</h2>
       <span class="floor-tag">方案速览</span>
     </div>
-    <p class="floor-body">苹果 iPhone 17 系列已进入大规模量产阶段，头部代工厂在国内的工厂启动旺季招工。苹果规划 2025 年 iPhone 17 系列出货约 1 亿台（前代 iPhone 16 初期指引约 9000 万台）；国际投行指引购物季出货或达约 7800 万台。供应链端，<strong>从 iPhone 17 起美国市场由印度工厂供应，中国及欧洲、日本等市场由国内工厂供应</strong>，形成&quot;双线并行&quot;格局；核心代工与组装仍由中国大陆产业链承担主体，光学、结构件、散热等环节新增量显著。</p>
+    
+    <div class="chart-wrap">
+      <svg viewBox="0 0 280 192" class="chart-svg chart-bar">
+        <line x1="140" y1="0" x2="140" y2="192" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="3 3"/>
+        
+      <text x="132" y="15" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">有色金属</text>
+      <rect x="140" y="0" width="130.0" height="22" fill="#10b981" rx="3"/>
+      <text x="274" y="15" text-anchor="start" font-size="11" font-weight="600" fill="#10b981" font-family="var(--font-mono)">+8.5%</text>
+      <text x="132" y="47" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">新能源</text>
+      <rect x="140" y="32" width="94.8" height="22" fill="#10b981" rx="3"/>
+      <text x="238.8" y="47" text-anchor="start" font-size="11" font-weight="600" fill="#10b981" font-family="var(--font-mono)">+6.2%</text>
+      <text x="132" y="79" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">半导体</text>
+      <rect x="140" y="64" width="62.7" height="22" fill="#10b981" rx="3"/>
+      <text x="206.7" y="79" text-anchor="start" font-size="11" font-weight="600" fill="#10b981" font-family="var(--font-mono)">+4.1%</text>
+      <text x="132" y="111" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">医药</text>
+      <rect x="112.5" y="96" width="27.5" height="22" fill="#ef4444" rx="3"/>
+      <text x="108.5" y="111" text-anchor="end" font-size="11" font-weight="600" fill="#ef4444" font-family="var(--font-mono)">-1.8%</text>
+      <text x="132" y="143" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">地产</text>
+      <rect x="91.1" y="128" width="48.9" height="22" fill="#ef4444" rx="3"/>
+      <text x="87.1" y="143" text-anchor="end" font-size="11" font-weight="600" fill="#ef4444" font-family="var(--font-mono)">-3.2%</text>
+      <text x="132" y="175" text-anchor="end" font-size="11" fill="#64748b" font-family="var(--font-cn)">消费</text>
+      <rect x="57.400000000000006" y="160" width="82.6" height="22" fill="#ef4444" rx="3"/>
+      <text x="53.400000000000006" y="175" text-anchor="end" font-size="11" font-weight="600" fill="#ef4444" font-family="var(--font-mono)">-5.4%</text>
+      </svg>
+    </div>
   </section>
   <section class="floor floor-2" style="animation-delay: 0.25s;">
     <div class="floor-head">
       <span class="floor-num">2</span>
-      <h2 class="floor-title">A股产业链观察</h2>
+      <h2 class="floor-title">市场份额</h2>
       <span class="floor-tag">主体拆解</span>
     </div>
     
-    <p class="floor-lead">果链三层结构值得拉通观察</p>
-    <div class="card-grid">
-      
-        <div class="mini-card">
-          <span class="mini-card-num">1</span>
-          <div class="mini-card-body">
-            <p class="mini-card-title">核心组装与代工环节</p>
-            <p class="mini-card-desc">头部代工龙头、精密零组件组装方向</p>
-          </div>
-        </div>
-        <div class="mini-card">
-          <span class="mini-card-num">2</span>
-          <div class="mini-card-body">
-            <p class="mini-card-title">关键零组件环节</p>
-            <p class="mini-card-desc">OLED 面板、摄像头模组、底盘结构件、玻璃后盖、FPC 软板、电池等方向；<strong>散热升级</strong>（均热板、VC 散热）为 iPhone 17 的新增量重点</p>
-          </div>
-        </div>
-        <div class="mini-card">
-          <span class="mini-card-num">3</span>
-          <div class="mini-card-body">
-            <p class="mini-card-title">光学与创新料号环节</p>
-            <p class="mini-card-desc">Meta Lens 超薄前摄、玻塑混合镜头、模造玻璃等技术路线，或带动光学供应链价量双升。以上为产业环节颗粒度观察，不涉及具体公司推荐</p>
-          </div>
-        </div>
+    <div class="chart-wrap">
+      <svg viewBox="0 0 200 200" class="chart-svg">
+        <circle r="75" cx="100" cy="100" fill="none" stroke="#2563eb" stroke-width="22" stroke-dasharray="188.50 471.24" stroke-dashoffset="0.00" transform="rotate(-90 100 100)"/><circle r="75" cx="100" cy="100" fill="none" stroke="#f59e0b" stroke-width="22" stroke-dasharray="117.81 471.24" stroke-dashoffset="-188.50" transform="rotate(-90 100 100)"/><circle r="75" cx="100" cy="100" fill="none" stroke="#10b981" stroke-width="22" stroke-dasharray="84.82 471.24" stroke-dashoffset="-306.31" transform="rotate(-90 100 100)"/><circle r="75" cx="100" cy="100" fill="none" stroke="#ef4444" stroke-width="22" stroke-dasharray="80.11 471.24" stroke-dashoffset="-391.13" transform="rotate(-90 100 100)"/>
+        <text x="100" y="95" text-anchor="middle" font-family="var(--font-display)" font-size="14" fill="#64748b">总计</text>
+        <text x="100" y="115" text-anchor="middle" font-family="var(--font-mono)" font-size="20" font-weight="700" fill="var(--accent)">100%</text>
+      </svg>
+      <div class="chart-legend">
+    <div class="chart-legend-item">
+      <span class="chart-legend-dot" style="background:#2563eb"></span>
+      <span class="chart-legend-label">国产 A</span>
+      <span class="chart-legend-pct">40%</span>
     </div>
-    <p class="floor-tail">以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
+    <div class="chart-legend-item">
+      <span class="chart-legend-dot" style="background:#f59e0b"></span>
+      <span class="chart-legend-label">国产 B</span>
+      <span class="chart-legend-pct">25%</span>
+    </div>
+    <div class="chart-legend-item">
+      <span class="chart-legend-dot" style="background:#10b981"></span>
+      <span class="chart-legend-label">国产 C</span>
+      <span class="chart-legend-pct">18%</span>
+    </div>
+    <div class="chart-legend-item">
+      <span class="chart-legend-dot" style="background:#ef4444"></span>
+      <span class="chart-legend-label">海外品牌</span>
+      <span class="chart-legend-pct">17%</span>
+    </div></div>
+    </div>
   </section>
   <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
       <span class="floor-num">3</span>
-      <h2 class="floor-title">市场节奏</h2>
+      <h2 class="floor-title">正反观点</h2>
       <span class="floor-tag">传导观察</span>
     </div>
     
-    <p class="floor-body">短期（1—2 个月）情绪锚定点为 iPhone 17 首批出货验证与销量数据，若销量超预期或带动果链阶段性关注度提升。中期（3—6 月）可观察。需区分&quot;发布期情绪&quot;与&quot;订单兑现&quot;的时间差。</p>
-    <div class="chips">
-      <span class="chip"><span class="chip-num">1</span>iPhone 17 实际销量环比节奏</span><span class="chip"><span class="chip-num">2</span>折叠屏 iPhone（预计 2026 秋发布）供应链 BOM 清单锁定进度</span><span class="chip"><span class="chip-num">3</span>印度工厂产能爬坡对国内产业链订单的重分配影响</span>
+    <div class="pros-cons">
+      <div class="pc-col pc-pros">
+        <div class="pc-title">正向因素</div>
+        <ul><li>①产业政策持续加码</li><li>②头部企业订单饱满</li><li>③海外需求边际改善。</li></ul>
+      </div>
+      <div class="pc-col pc-cons">
+        <div class="pc-title">反向因素</div>
+        <ul><li>①估值已反映乐观预期</li><li>②供给侧压力未完全消化</li><li>③宏观流动性边际收紧。</li></ul>
+      </div>
     </div>
   </section>
   <section class="floor floor-4" style="animation-delay: 0.45000000000000007s;">
     <div class="floor-head">
       <span class="floor-num">4</span>
-      <h2 class="floor-title">竞争格局</h2>
+      <h2 class="floor-title">三情景推演</h2>
       <span class="floor-tag">节奏/周期</span>
     </div>
-    <p class="floor-body">果链内部正经历订单重分配——美国市场转由印度工厂供应，国内企业需通过折叠屏、Meta Lens 等新料号维持价值量；同时，国内企业在非苹客户（国内主流安卓手机品牌与海外品牌）份额提升，安卓阵营的镜头与散热规格升级也在贡献增量；果链企业&quot;去苹化&quot;战略推进进度或成为后续关注抓手。</p>
+    
+    <div class="scenario">
+      
+        <div class="sc-cell sc-bull">
+          <div class="sc-key">乐观</div>
+          <div class="sc-desc">板块业绩兑现度超预期，Q2 或延续强势</div>
+        </div>
+        <div class="sc-cell sc-base">
+          <div class="sc-key">中性</div>
+          <div class="sc-desc">业绩与估值匹配度合理，呈现震荡整理走势</div>
+        </div>
+        <div class="sc-cell sc-bear">
+          <div class="sc-key">悲观</div>
+          <div class="sc-desc">若外部扰动加剧，阶段性回调压力上升</div>
+        </div>
+    </div>
+  </section>
+  <section class="floor floor-5" style="animation-delay: 0.55s;">
+    <div class="floor-head">
+      <span class="floor-num">5</span>
+      <h2 class="floor-title">关键判断</h2>
+      <span class="floor-tag">信号梳理</span>
+    </div>
+    
+    <div class="callout">
+      <div class="callout-tag">关键判断</div>
+      <div class="callout-text">行业基本面向好与估值消化并存，关注业绩兑现节奏。短期情绪修复已较充分，后续走向以实际出货与订单数据为准。</div>
+    </div>
+    
   </section>
 
-  <section class="floor floor-risk" style="animation-delay: 0.55s;">
+  <section class="floor floor-risk" style="animation-delay: 0.65s;">
     <div class="floor-head">
-      <span class="floor-num floor-num-risk">5</span>
+      <span class="floor-num floor-num-risk">6</span>
       <h2 class="floor-title">风险提示</h2>
       <span class="floor-tag floor-tag-risk">需留意</span>
     </div>
     <ul class="risk-list">
       
-      <li class="risk-item"><span class="risk-item-num">1</span>iPhone 17 销量不及预期或影响果链订单节奏</li>
-      <li class="risk-item"><span class="risk-item-num">2</span>印度工厂份额提升或侵蚀国内订单</li>
-      <li class="risk-item"><span class="risk-item-num">3</span>折叠屏良率与 BOM 成本不达预期</li>
-      <li class="risk-item"><span class="risk-item-num">4</span>汇率与地缘政治因素对供应链的扰动</li>
-      <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
+      <li class="risk-item"><span class="risk-item-num">1</span>政策预期差带来的情绪波动</li>
+      <li class="risk-item"><span class="risk-item-num">2</span>海外订单受汇率与地缘因素扰动</li>
+      <li class="risk-item"><span class="risk-item-num">3</span>部分细分环节产能过剩</li>
+      <li class="risk-item"><span class="risk-item-num">4</span>二级市场流动性边际变化</li>
+      <li class="risk-item"><span class="risk-item-num">5</span>原材料价格回升挤压毛利。</li>
     </ul>
   </section>
   <footer class="footer">
     
     <p class="sources-title">信息来源</p>
     <ul class="sources-list">
-      <li><a href="https://finance.sina.com.cn/stock/hkstock/hkstocknews/2025-08-20/doc-infmqrun0569111.shtml" target="_blank" rel="noopener">港股概念追踪 | iPhone 17已进入大规模量产阶段 &quot;果链&quot;迎增长机遇 · 新浪财经</a></li><li><a href="https://cj.sina.com.cn/articles/view/2739349497/a34727f9001017mme" target="_blank" rel="noopener">iPhone 17揭开神秘面纱，134只果链概念股&quot;躁动&quot; · 新浪财经</a></li><li><a href="https://www.esmchina.com/news/13318.html" target="_blank" rel="noopener">印度制造更香了？中印工厂将同步出货iPhone 17 · 国际电子商情</a></li><li><a href="https://www.cls.cn/detail/2140505" target="_blank" rel="noopener">没有涨价、更多创新！iPhone17系列告别&quot;挤牙膏&quot; 果链迎来新行情？· 财联社</a></li><li><a href="https://www.etime.net.cn/site/articalInfo.php?NewsID=76242" target="_blank" rel="noopener">苹果供应链新变化：平衡多元化与本土化、推进自动化与碳中和 · ICNET</a></li>
+      <li><a href="http://www.xinhuanet.com/" target="_blank" rel="noopener">新华社 · 行业景气度月度追踪</a></li><li><a href="https://www.stcn.com/" target="_blank" rel="noopener">证券时报 · 板块资金流向</a></li><li><a href="https://www.cnstock.com/" target="_blank" rel="noopener">上海证券报 · 机构策略观点汇总</a></li>
     </ul>
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>

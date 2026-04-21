@@ -323,6 +323,504 @@
     display: flex; align-items: center; justify-content: center;
   }
 
+  /* ============ KPI Card · 带箭头方向 ============ */
+  .kpi-card {
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(194, 65, 12, 0.1) 100%);
+    padding: 22px 20px; border-radius: 14px;
+    border-left: 4px solid var(--accent);
+  }
+  .kpi-body { text-align: center; }
+  .kpi-label { font-size: 12.5px; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.05em; }
+  .kpi-value {
+    font-family: var(--font-mono);
+    font-size: 28px; font-weight: 700;
+    color: var(--accent); line-height: 1.15;
+  }
+  .kpi-delta {
+    display: inline-flex; align-items: center; gap: 3px;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px;
+  }
+  .kpi-up { color: #059669; background: rgba(16,185,129,0.12); }
+  .kpi-down { color: #dc2626; background: rgba(239,68,68,0.12); }
+  .kpi-arrow { font-size: 14px; }
+
+  /* ============ Highlight Num · 超大单一数字 ============ */
+  .highlight-num {
+    text-align: center; padding: 26px 12px;
+    background: linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 100%);
+    border-radius: 16px; color: #fff;
+    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.25);
+  }
+  .highlight-value {
+    font-family: var(--font-display);
+    font-size: 48px; font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1;
+  }
+  .highlight-label {
+    margin-top: 10px;
+    font-size: 13px; opacity: 0.85;
+    font-family: var(--font-mono); letter-spacing: 0.08em;
+  }
+
+  /* ============ Compare Table · 二栏对比 ============ */
+  .compare-table {
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    background: var(--card);
+  }
+  .compare-head {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    background: linear-gradient(90deg, rgba(194, 65, 12, 0.12), rgba(251, 146, 60, 0.12));
+    padding: 10px 0;
+  }
+  .compare-head-cell {
+    text-align: center; font-weight: 700; padding: 6px 12px;
+    font-family: var(--font-display); font-size: 14px; color: var(--accent);
+  }
+  .compare-divider {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--muted); padding: 8px 4px;
+    border-left: 1px dashed var(--border); border-right: 1px dashed var(--border);
+    align-self: center;
+  }
+  .compare-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .compare-cell {
+    padding: 10px 14px; font-size: 13.5px; color: #334155;
+    line-height: 1.7;
+  }
+  .compare-cell + .compare-cell { border-left: 1px dashed var(--border); }
+
+  /* ============ VS Panel · 双栏详情 ============ */
+  .vs-panel {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px;
+    align-items: stretch;
+  }
+  .vs-side {
+    padding: 16px 18px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--border);
+  }
+  .vs-a { border-left: 4px solid var(--accent); }
+  .vs-b { border-left: 4px solid #fb923c; }
+  .vs-side-title {
+    font-weight: 700; font-size: 14px;
+    margin-bottom: 8px; color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .vs-b .vs-side-title { color: #fb923c; }
+  .vs-side-desc { font-size: 13px; color: #334155; line-height: 1.75; }
+  .vs-divider {
+    align-self: center; padding: 8px 10px;
+    background: var(--accent); color: #fff;
+    border-radius: 50%;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ============ Layered Chain · 产业链上中下游 ============ */
+  .layered-chain { display: grid; gap: 8px; }
+  .chain-layer {
+    display: grid; grid-template-columns: 60px 1fr;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    border-left: 3px solid var(--accent);
+  }
+  .chain-layer-1 { border-left-color: #7c2d12; }
+  .chain-layer-2 { border-left-color: #ea580c; }
+  .chain-layer-3 { border-left-color: #fb923c; }
+  .chain-key {
+    background: var(--accent);
+    color: #fff; font-weight: 700;
+    padding: 10px 4px; text-align: center;
+    font-family: var(--font-display); font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chain-layer-1 .chain-key { background: #7c2d12; }
+  .chain-layer-2 .chain-key { background: #ea580c; }
+  .chain-layer-3 .chain-key { background: #fb923c; }
+  .chain-desc {
+    padding: 10px 14px; font-size: 13px; color: #334155; line-height: 1.7;
+  }
+
+  /* ============ Hierarchy Tree · 层级树 ============ */
+  .hierarchy { display: grid; gap: 12px; }
+  .hier-branch {
+    padding: 12px 14px;
+    background: var(--accent-bg); border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .hier-parent {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 14px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .hier-kids { display: flex; flex-wrap: wrap; gap: 6px; }
+  .hier-kid {
+    background: var(--card);
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 12px; color: #334155;
+    border: 1px solid rgba(194, 65, 12, 0.25);
+  }
+
+  /* ============ Matrix 2x2 · 四象限 ============ */
+  .matrix-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    position: relative;
+  }
+  .matrix-cell {
+    padding: 16px 14px; border-radius: 10px;
+    min-height: 90px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .matrix-q1 { background: rgba(16,185,129,0.12); border-left: 3px solid #10b981; }
+  .matrix-q2 { background: rgba(245,158,11,0.12); border-left: 3px solid #f59e0b; }
+  .matrix-q3 { background: rgba(239,68,68,0.12); border-left: 3px solid #ef4444; }
+  .matrix-q4 { background: rgba(59,130,246,0.12); border-left: 3px solid #3b82f6; }
+  .matrix-key {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700;
+    color: var(--muted); letter-spacing: 0.1em;
+  }
+  .matrix-desc { font-size: 13px; color: #334155; line-height: 1.65; }
+
+  /* ============ Timeline H · 水平时间轴 ============ */
+  .timeline-h {
+    display: flex; overflow-x: auto;
+    padding: 16px 4px 12px; gap: 0;
+    position: relative;
+  }
+  .timeline-h::before {
+    content: ""; position: absolute;
+    left: 20px; right: 20px; top: 28px;
+    height: 2px;
+    background: rgba(194, 65, 12, 0.3);
+    z-index: 0;
+  }
+  .tl-node {
+    flex: 1; min-width: 130px;
+    text-align: center; position: relative; z-index: 1;
+  }
+  .tl-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin: 0 auto 10px;
+    box-shadow: 0 0 0 4px var(--card), 0 2px 6px rgba(194, 65, 12, 0.4);
+  }
+  .tl-date {
+    font-family: var(--font-mono); font-size: 11.5px;
+    font-weight: 700; color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .tl-desc { font-size: 12px; color: #334155; line-height: 1.65; padding: 0 4px; }
+
+  /* ============ Timeline V · 垂直时间轴 ============ */
+  .timeline-v { padding: 6px 2px 0; }
+  .tv-node { display: grid; grid-template-columns: 30px 1fr; gap: 12px; }
+  .tv-side { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .tv-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--accent); margin-top: 4px;
+    box-shadow: 0 0 0 3px var(--card), 0 2px 6px rgba(194, 65, 12, 0.3);
+    flex-shrink: 0;
+  }
+  .tv-line {
+    width: 2px; flex: 1; margin-top: 4px;
+    background: rgba(194, 65, 12, 0.3);
+    min-height: 20px;
+  }
+  .tv-body { padding-bottom: 18px; padding-top: 2px; }
+  .tv-date {
+    font-family: var(--font-mono); font-size: 12px;
+    font-weight: 700; color: var(--accent); margin-bottom: 4px;
+  }
+  .tv-desc { font-size: 13.5px; color: #334155; line-height: 1.7; }
+
+  /* ============ Period Cards · 短中长期 ============ */
+  .period-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .period-card {
+    padding: 14px 12px; border-radius: 12px;
+    background: var(--accent-bg);
+    border-top: 3px solid var(--accent);
+    text-align: center;
+  }
+  .period-card:nth-child(1) { border-top-color: #7c2d12; background: rgba(124, 45, 18, 0.08); }
+  .period-card:nth-child(2) { border-top-color: #ea580c; background: rgba(234, 88, 12, 0.08); }
+  .period-card:nth-child(3) { border-top-color: #fb923c; background: rgba(251, 146, 60, 0.1); }
+  .period-key {
+    font-family: var(--font-display);
+    font-size: 14.5px; font-weight: 700;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .period-desc { font-size: 12.5px; color: #334155; line-height: 1.7; }
+
+  /* ============ Podium · 领奖台 ============ */
+  .podium {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; align-items: end;
+  }
+  .podium-step {
+    border-radius: 12px 12px 4px 4px;
+    padding: 14px 10px; text-align: center; color: #fff;
+  }
+  .podium-gold   { background: linear-gradient(135deg, #fbbf24, #f59e0b); min-height: 120px; }
+  .podium-silver { background: linear-gradient(135deg, #cbd5e1, #94a3b8); min-height: 100px; }
+  .podium-bronze { background: linear-gradient(135deg, #fcd34d, #d97706); min-height: 80px; }
+  .podium-rank {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 18px; margin-bottom: 6px;
+  }
+  .podium-label { font-size: 12.5px; line-height: 1.5; }
+
+  /* ============ Pros Cons · 正反对照 ============ */
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pc-col { padding: 14px 14px 12px; border-radius: 12px; }
+  .pc-pros { background: rgba(16,185,129,0.08); border-left: 3px solid #10b981; }
+  .pc-cons { background: rgba(239,68,68,0.08); border-left: 3px solid #ef4444; }
+  .pc-title {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 13.5px; margin-bottom: 8px;
+  }
+  .pc-pros .pc-title { color: #059669; }
+  .pc-cons .pc-title { color: #dc2626; }
+  .pc-col ul { margin: 0; padding-left: 18px; }
+  .pc-col li { font-size: 13px; color: #334155; line-height: 1.7; margin-bottom: 4px; }
+
+  /* ============ Progress Bars · 进度条 ============ */
+  .progress-bars { display: grid; gap: 10px; }
+  .pb-row {
+    display: grid; grid-template-columns: 100px 1fr 50px;
+    align-items: center; gap: 10px;
+  }
+  .pb-label { font-size: 12.5px; color: #334155; font-weight: 600; }
+  .pb-track {
+    height: 10px; background: #e2e8f0; border-radius: 999px; overflow: hidden;
+  }
+  .pb-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), rgba(251, 146, 60, 0.8));
+    border-radius: 999px;
+    transition: width 0.6s ease-out;
+  }
+  .pb-pct {
+    font-family: var(--font-mono); font-size: 12px;
+    font-weight: 700; color: var(--accent); text-align: right;
+  }
+
+  /* ============ Delta Bars · 涨跌幅横条 ============ */
+  .delta-bars { display: grid; gap: 6px; }
+  .db-row {
+    display: grid; grid-template-columns: 80px 1fr 60px;
+    align-items: center; gap: 10px;
+  }
+  .db-label { font-size: 12.5px; color: #334155; }
+  .db-track {
+    position: relative; height: 18px; background: rgba(194, 65, 12, 0.05); border-radius: 4px;
+  }
+  .db-axis {
+    position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: var(--muted); opacity: 0.4;
+  }
+  .db-fill {
+    position: absolute; top: 2px; bottom: 2px;
+    border-radius: 3px;
+  }
+  .db-pos { background: linear-gradient(90deg, rgba(16,185,129,0.5), #10b981); }
+  .db-neg { background: linear-gradient(90deg, #ef4444, rgba(239,68,68,0.5)); }
+  .db-pct {
+    font-family: var(--font-mono); font-size: 12px;
+    font-weight: 700; text-align: right;
+  }
+  .db-pct.db-pos { color: #059669; }
+  .db-pct.db-neg { color: #dc2626; }
+
+  /* ============ Callout · 关键判断框 ============ */
+  .callout {
+    display: grid; grid-template-columns: auto 1fr; gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(90deg, rgba(194, 65, 12, 0.1), transparent);
+    border-left: 4px solid var(--accent);
+    border-radius: 10px;
+    align-items: start;
+  }
+  .callout-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px; font-weight: 700;
+    color: #fff; background: var(--accent);
+    padding: 3px 10px; border-radius: 4px;
+    letter-spacing: 0.05em; white-space: nowrap;
+  }
+  .callout-text {
+    font-size: 14px; font-weight: 500;
+    color: var(--text); line-height: 1.75;
+  }
+
+  /* ============ Tag Cloud · 标签云 ============ */
+  .tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 6px 8px;
+    padding: 8px 4px; align-items: center;
+  }
+  .tc-tag {
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid rgba(194, 65, 12, 0.25);
+    font-weight: 500;
+  }
+  .tc-sm { font-size: 11.5px; opacity: 0.75; }
+  .tc-md { font-size: 13px; }
+  .tc-lg { font-size: 15px; font-weight: 700; background: var(--accent); color: #fff; }
+
+  /* ============ Chart · 饼图/环形/条形 ============ */
+  .chart-wrap {
+    display: grid; grid-template-columns: 200px 1fr; gap: 16px;
+    align-items: center; padding: 8px 0;
+  }
+  .chart-svg { width: 200px; height: auto; }
+  .chart-bar { width: 100%; }
+  .chart-legend { display: grid; gap: 6px; }
+  .chart-legend-item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 10px;
+    align-items: center; font-size: 13px;
+  }
+  .chart-legend-dot {
+    width: 12px; height: 12px; border-radius: 3px;
+    display: inline-block;
+  }
+  .chart-legend-label { color: #334155; }
+  .chart-legend-pct {
+    font-family: var(--font-mono); font-weight: 700; color: var(--accent);
+  }
+
+  /* ============ Sparkline · 迷你趋势 ============ */
+  .sparkline-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 16px;
+  }
+  .sparkline-svg { width: 100%; height: 60px; }
+  .sparkline-meta {
+    display: flex; justify-content: space-between; gap: 10px;
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    font-family: var(--font-mono); font-size: 11px;
+  }
+  .sparkline-min { color: #dc2626; }
+  .sparkline-max { color: #059669; }
+  .sparkline-last { color: var(--accent); font-weight: 700; }
+
+  /* ============ Heatmap · 热力图 ============ */
+  .heatmap {
+    display: grid; gap: 2px; background: var(--card);
+    padding: 4px; border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .hm-row { display: grid; grid-template-columns: 1fr repeat(auto-fit, minmax(40px, 1fr)); gap: 2px; }
+  .hm-header { font-weight: 700; color: var(--muted); font-size: 11px; }
+  .hm-cell {
+    padding: 8px 6px; text-align: center;
+    font-size: 11.5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+  }
+  .hm-row-label {
+    text-align: left; font-weight: 600; color: #334155;
+    font-family: var(--font-cn);
+  }
+  .hm-data { color: #064e3b; font-weight: 600; }
+
+  /* ============ Quote Block · 官方引用 ============ */
+  .quote-block {
+    margin: 0; padding: 18px 20px 18px 44px;
+    background: rgba(194, 65, 12, 0.06);
+    border-radius: 12px; position: relative;
+    border-left: 3px solid var(--accent);
+  }
+  .quote-mark {
+    position: absolute; left: 12px; top: 6px;
+    font-family: var(--font-display);
+    font-size: 44px; color: var(--accent);
+    opacity: 0.5; line-height: 1;
+  }
+  .quote-text {
+    font-family: var(--font-display);
+    font-size: 15px; font-style: italic;
+    color: var(--text); line-height: 1.75;
+  }
+  .quote-source {
+    margin-top: 8px;
+    font-family: var(--font-mono); font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  /* ============ Scenario · 三情景 ============ */
+  .scenario { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .sc-cell {
+    padding: 14px 12px; border-radius: 12px;
+    border-top: 3px solid;
+  }
+  .sc-bull { background: rgba(16,185,129,0.08); border-top-color: #10b981; }
+  .sc-base { background: rgba(59,130,246,0.08); border-top-color: #3b82f6; }
+  .sc-bear { background: rgba(239,68,68,0.08); border-top-color: #ef4444; }
+  .sc-key {
+    font-family: var(--font-display);
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .sc-bull .sc-key { color: #059669; }
+  .sc-base .sc-key { color: #2563eb; }
+  .sc-bear .sc-key { color: #dc2626; }
+  .sc-desc { font-size: 12.5px; color: #334155; line-height: 1.7; }
+
+  /* ============ Venn · 三圈交集 ============ */
+  .venn {
+    display: grid; grid-template-columns: 280px 1fr; gap: 14px;
+    align-items: center;
+  }
+  .venn-svg { width: 280px; }
+  .venn-labels { display: grid; gap: 8px; }
+  .venn-set {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #334155;
+  }
+  .venn-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    display: inline-block; flex-shrink: 0;
+  }
+  .venn-center {
+    margin-top: 6px; padding: 8px 12px;
+    background: var(--accent-bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-size: 12.5px; color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ============ Map Tag · 地域分布 ============ */
+  .map-tag { display: grid; gap: 8px; }
+  .mt-item {
+    display: grid; grid-template-columns: 34px 1fr; gap: 10px;
+    padding: 10px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+    align-items: center;
+  }
+  .mt-pin { font-size: 22px; }
+  .mt-region {
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--accent); font-size: 13.5px;
+    margin-bottom: 2px;
+  }
+  .mt-desc { font-size: 12.5px; color: #334155; line-height: 1.65; }
+
   /* ============ Footer ============ */
   .footer {
     background: var(--card);
@@ -380,6 +878,17 @@
     .card-grid { grid-template-columns: 1fr; }
     .flow { flex-direction: column; }
     .flow-arrow { transform: rotate(90deg); }
+    .compare-head { grid-template-columns: 1fr auto 1fr; }
+    .vs-panel { grid-template-columns: 1fr; gap: 8px; }
+    .vs-divider { margin: 0 auto; }
+    .period-cards, .scenario, .pros-cons { grid-template-columns: 1fr; }
+    .matrix-2x2 { grid-template-columns: 1fr; }
+    .chart-wrap { grid-template-columns: 1fr; }
+    .chart-svg { margin: 0 auto; }
+    .venn { grid-template-columns: 1fr; }
+    .venn-svg { margin: 0 auto; }
+    .podium-step { min-height: auto !important; padding: 10px 8px; }
+    .pb-row { grid-template-columns: 80px 1fr 44px; }
     body { font-size: 15.5px; }
   }
 </style>
@@ -404,32 +913,32 @@
       <span class="floor-tag">方案速览</span>
     </div>
     
-      <p class="floor-lead">2026年4月，A 股商业航天方向集体拉升——4月14日板块主力资金净流入超 22 亿元，多只相关方向短期活跃。驱动因素呈&quot;密集发射+大会节点+海外映射&quot;三重共振</p>
-      <div class="card-grid">
-        
-          <div class="mini-card">
-            <span class="mini-card-num">1</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">密集发射</p>
-              <p class="mini-card-desc">4/7 长征八号以一箭18星送入千帆第七批组网；4/9 长征六号改发射21颗低轨互联网卫星；4/14 力箭一号发射8颗卫星；发射频次达阶段性新高</p>
-            </div>
-          </div>
-          <div class="mini-card">
-            <span class="mini-card-num">2</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">大会节点</p>
-              <p class="mini-card-desc">2026 中国航天大会 4/23—26、中国航天日主场活动 4/24 均在成都举办</p>
-            </div>
-          </div>
-          <div class="mini-card">
-            <span class="mini-card-num">3</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">海外映射</p>
-              <p class="mini-card-desc">亚马逊接近完成对卫星运营商 Globalstar 的收购，全球商业航天并购节奏或带来映射效应</p>
-            </div>
-          </div>
-      </div>
+    <p class="floor-lead">2026年4月，A 股商业航天方向集体拉升——4月14日板块主力资金净流入超 22 亿元，多只相关方向短期活跃。驱动因素呈&quot;密集发射+大会节点+海外映射&quot;三重共振</p>
+    <div class="card-grid">
       
+        <div class="mini-card">
+          <span class="mini-card-num">1</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">密集发射</p>
+            <p class="mini-card-desc">4/7 长征八号以一箭18星送入千帆第七批组网；4/9 长征六号改发射21颗低轨互联网卫星；4/14 力箭一号发射8颗卫星；发射频次达阶段性新高</p>
+          </div>
+        </div>
+        <div class="mini-card">
+          <span class="mini-card-num">2</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">大会节点</p>
+            <p class="mini-card-desc">2026 中国航天大会 4/23—26、中国航天日主场活动 4/24 均在成都举办</p>
+          </div>
+        </div>
+        <div class="mini-card">
+          <span class="mini-card-num">3</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">海外映射</p>
+            <p class="mini-card-desc">亚马逊接近完成对卫星运营商 Globalstar 的收购，全球商业航天并购节奏或带来映射效应</p>
+          </div>
+        </div>
+    </div>
+    
   </section>
   <section class="floor floor-2" style="animation-delay: 0.25s;">
     <div class="floor-head">
@@ -438,32 +947,32 @@
       <span class="floor-tag">主体拆解</span>
     </div>
     
-      <p class="floor-lead">三层结构拉通梳理</p>
-      <div class="card-grid">
-        
-          <div class="mini-card">
-            <span class="mini-card-num">1</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">上游（火箭+发射场）</p>
-              <p class="mini-card-desc">长征系列运载火箭、商业可回收火箭（长征十号乙计划 4/28 首飞并同步验证海上网回收），发射场吞吐量、测控与遥测配套环节</p>
-            </div>
+    <p class="floor-lead">三层结构拉通梳理</p>
+    <div class="card-grid">
+      
+        <div class="mini-card">
+          <span class="mini-card-num">1</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">上游（火箭+发射场）</p>
+            <p class="mini-card-desc">长征系列运载火箭、商业可回收火箭（长征十号乙计划 4/28 首飞并同步验证海上网回收），发射场吞吐量、测控与遥测配套环节</p>
           </div>
-          <div class="mini-card">
-            <span class="mini-card-num">2</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">中游（卫星制造+核心部组件）</p>
-              <p class="mini-card-desc">卫星本体、T/R 芯片、相控阵天线、激光星间链路、星载原子钟等产业环节，批产能力与国产化率是核心观察指标</p>
-            </div>
+        </div>
+        <div class="mini-card">
+          <span class="mini-card-num">2</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">中游（卫星制造+核心部组件）</p>
+            <p class="mini-card-desc">卫星本体、T/R 芯片、相控阵天线、激光星间链路、星载原子钟等产业环节，批产能力与国产化率是核心观察指标</p>
           </div>
-          <div class="mini-card">
-            <span class="mini-card-num">3</span>
-            <div class="mini-card-body">
-              <p class="mini-card-title">下游（应用+终端）</p>
-              <p class="mini-card-desc">卫星互联网运营、地面站、终端（手机直连卫星、船载/机载终端）、地理信息与遥感数据服务。以上为产业环节颗粒度观察，不涉及具体公司推荐</p>
-            </div>
+        </div>
+        <div class="mini-card">
+          <span class="mini-card-num">3</span>
+          <div class="mini-card-body">
+            <p class="mini-card-title">下游（应用+终端）</p>
+            <p class="mini-card-desc">卫星互联网运营、地面站、终端（手机直连卫星、船载/机载终端）、地理信息与遥感数据服务。以上为产业环节颗粒度观察，不涉及具体公司推荐</p>
           </div>
-      </div>
-      <p class="floor-tail">以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
+        </div>
+    </div>
+    <p class="floor-tail">以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
   </section>
   <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
@@ -472,10 +981,10 @@
       <span class="floor-tag">传导观察</span>
     </div>
     
-      <p class="floor-body">短期（2—4 周）情绪催化较强，密集事件窗口连续出现——4/23—26 航天大会、4/24 航天日主场、4/28 长征十号乙首飞，或形成连续关注度。中期（3—6 月）可观察。需区分&quot;事件催化情绪&quot;与&quot;业绩兑现&quot;的时间差。</p>
-      <div class="chips">
-        <span class="chip"><span class="chip-num">1</span>可回收火箭商业发射成本下降验证</span><span class="chip"><span class="chip-num">2</span>千帆与星网组网达成率</span><span class="chip"><span class="chip-num">3</span>下游手机直连与偏远地区通信商业化试点</span>
-      </div>
+    <p class="floor-body">短期（2—4 周）情绪催化较强，密集事件窗口连续出现——4/23—26 航天大会、4/24 航天日主场、4/28 长征十号乙首飞，或形成连续关注度。中期（3—6 月）可观察。需区分&quot;事件催化情绪&quot;与&quot;业绩兑现&quot;的时间差。</p>
+    <div class="chips">
+      <span class="chip"><span class="chip-num">1</span>可回收火箭商业发射成本下降验证</span><span class="chip"><span class="chip-num">2</span>千帆与星网组网达成率</span><span class="chip"><span class="chip-num">3</span>下游手机直连与偏远地区通信商业化试点</span>
+    </div>
   </section>
   <section class="floor floor-4" style="animation-delay: 0.45000000000000007s;">
     <div class="floor-head">
