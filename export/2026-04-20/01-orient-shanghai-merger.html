@@ -42,7 +42,7 @@
   }
   .page { max-width: 760px; margin: 0 auto; padding: 28px 18px 56px; }
 
-  /* ============ Hero · 非对称 + 噪点 ============ */
+  /* ============ Hero ============ */
   .hero {
     background:
       radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
@@ -100,9 +100,8 @@
     padding-top: 14px;
     border-top: 1px dashed rgba(255,255,255,0.22);
   }
-  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ============ Floor · 非对称卡片 ============ */
+  /* ============ Floor ============ */
   .floor {
     background: var(--card);
     border-radius: 16px;
@@ -114,8 +113,8 @@
     animation: rise 0.55s ease-out both;
     position: relative;
   }
-  .floor:nth-child(even) { transform: translateX(8px); }    /* 非对称 */
-  .floor:nth-child(odd)  { transform: translateX(-4px); }
+  .floor:nth-child(even) { transform: translateX(6px); }
+  .floor:nth-child(odd)  { transform: translateX(-3px); }
   .floor-head {
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 14px;
@@ -139,7 +138,6 @@
     color: var(--text);
     margin: 0;
     flex: 1;
-    letter-spacing: -0.005em;
   }
   .floor-tag {
     font-size: 11px;
@@ -151,20 +149,157 @@
     color: var(--accent);
   }
   .floor-tag-risk { background: var(--risk-bg); color: var(--risk); }
-  .floor-body {
+  .floor-lead {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .floor-body, .floor-tail {
     font-size: 15px;
     color: #334155;
     line-height: 1.85;
     margin: 0;
     text-align: justify;
   }
-  .floor-body strong {
+  .floor-tail { margin-top: 12px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  .floor-body strong, .floor-lead strong {
     color: var(--accent);
     font-weight: 600;
-    padding: 0 1px;
   }
 
-  /* ============ Risk 列表 ============ */
+  /* ============ Stat Grid · 大数字 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(29, 78, 216, 0.06) 100%);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    border-left: 3px solid var(--accent);
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stat-delta {
+    font-size: 11.5px;
+    color: #059669;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* ============ Card Grid · ①②③ 编号卡 ============ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .mini-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .mini-card-num {
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .mini-card-body { flex: 1; }
+  .mini-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .mini-card-desc {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ============ Flow · 时间轴 ============ */
+  .flow {
+    display: flex; align-items: center;
+    gap: 6px;
+    background: var(--accent-bg);
+    padding: 14px;
+    border-radius: 12px;
+    margin: 6px 0 4px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1; min-width: 80px;
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid rgba(29, 78, 216, 0.2);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ============ Chips · 抓手列表 ============ */
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(29, 78, 216, 0.2);
+  }
+  .chip-num {
+    background: var(--accent);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center; justify-content: center;
+  }
+
+  /* ============ Risk · 风险列表 ============ */
   .risk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
   .risk-item {
     display: flex; gap: 12px;
@@ -233,7 +368,7 @@
     letter-spacing: 0.03em;
   }
 
-  /* ============ 移动端 ============ */
+  /* 移动端 */
   @media (max-width: 640px) {
     .page { padding: 18px 12px 40px; }
     .hero { padding: 26px 20px; }
@@ -241,13 +376,16 @@
     .hero-subtitle { font-size: 14.5px; }
     .floor { padding: 18px 18px 14px; }
     .floor:nth-child(even), .floor:nth-child(odd) { transform: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
     body { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header class="hero">
     <span class="hero-badge">3B · 资本市场制度利好</span>
     <h1 class="hero-title">东方拟购沪证，券商整合再落一子</h1>
@@ -259,12 +397,11 @@
     </div>
   </header>
 
-
   <section class="floor floor-1" style="animation-delay: 0.15s;">
     <div class="floor-head">
       <span class="floor-num">1</span>
       <h2 class="floor-title">改革核心条款</h2>
-      <span class="floor-tag">✦</span>
+      <span class="floor-tag">方案速览</span>
     </div>
     <p class="floor-body">2026年4月19日，东方证券公告拟通过&quot;发行A股股份+支付现金&quot;方式收购上海证券100%股权，4月20日起停牌不超过10个交易日。交易对方涵盖百联集团（50%）、上海国际集团投资（16.33%）、上海国际集团（7.68%）、上海城投（1%）以及国泰海通（18.74%股份+6.25%现金）五方。合并后东方证券资产总额有望突破 6000 亿元、净资产超千亿元、分支机构扩至 250 家左右，行业排名有望进入前十。</p>
   </section>
@@ -272,25 +409,80 @@
     <div class="floor-head">
       <span class="floor-num">2</span>
       <h2 class="floor-title">直接受益逻辑</h2>
-      <span class="floor-tag">❖</span>
+      <span class="floor-tag">主体拆解</span>
     </div>
-    <p class="floor-body">从市场主体层面梳理四条受益线——① <strong>合并实体</strong>：资产规模跃升，零售网络与机构业务具备阶段性协同空间；② <strong>上海金融国资参与方</strong>：百联集团、上海国际集团等实现上海证券股权的证券化退出，完成金融国资的结构性优化；③ <strong>上海国际金融中心建设</strong>：本次合并被官方定位为&quot;服务国家战略和上海国际金融中心建设&quot;的重要举措，与上海金融国资国企改革主线一致；④ <strong>券商并购主题方向</strong>：继国泰+海通、国联+民生、浙商+国都之后，本次合并或进一步强化&quot;做优做强头部券商&quot;的政策预期，相关行业方向可关注。以上仅为主体层逻辑，不涉及具体公司推荐。</p>
+    
+      <p class="floor-lead">从市场主体层面梳理四条受益线</p>
+      <div class="card-grid">
+        
+          <div class="mini-card">
+            <span class="mini-card-num">1</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">合并实体</p>
+              <p class="mini-card-desc">资产规模跃升，零售网络与机构业务具备阶段性协同空间</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">2</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">上海金融国资参与方</p>
+              <p class="mini-card-desc">百联集团、上海国际集团等实现上海证券股权的证券化退出，完成金融国资的结构性优化</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">3</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">上海国际金融中心建设</p>
+              <p class="mini-card-desc">本次合并被官方定位为&quot;服务国家战略和上海国际金融中心建设&quot;的重要举措，与上海金融国资国企改革主线一致</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">4</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">券商并购主题方向</p>
+              <p class="mini-card-desc">继国泰+海通、国联+民生、浙商+国都之后，本次合并或进一步强化&quot;做优做强头部券商&quot;的政策预期，相关行业方向可关注。以上仅为主体层逻辑，不涉及具体公司推荐</p>
+            </div>
+          </div>
+      </div>
+      <p class="floor-tail">以上仅为主体层逻辑，不涉及具体公司推荐。</p>
   </section>
   <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
       <span class="floor-num">3</span>
       <h2 class="floor-title">市场活跃度观察</h2>
-      <span class="floor-tag">◆</span>
+      <span class="floor-tag">传导观察</span>
     </div>
-    <p class="floor-body">流动性→成交量→板块关注度的传导路径——券商合并主题在板块内的情绪发酵具备连续性，停牌期内具备合并预期的中小券商或受阶段性关注，尤其同地域（沪/京/粤）、同控股架构、具备国资背景的中小券商方向。中期可观察三项抓手：合并后协同效应兑现节奏、头部券商整合对行业集中度的实际影响、监管对券商并购的后续态度。</p>
+    
+      <p class="floor-lead">流动性</p>
+      <div class="flow">
+        
+          <div class="flow-step">流动性</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">成交量</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">板块关注度的传导路径</div>
+          
+      </div>
   </section>
   <section class="floor floor-4" style="animation-delay: 0.45000000000000007s;">
     <div class="floor-head">
       <span class="floor-num">4</span>
       <h2 class="floor-title">历史对标</h2>
-      <span class="floor-tag">◎</span>
+      <span class="floor-tag">节奏/周期</span>
     </div>
-    <p class="floor-body">历史上类似情形中，券商合并方案自公告至落地通常呈&quot;公告→停牌→方案出具→复牌→审批过会→实质合并&quot;多阶段，每一阶段情绪节奏与基本面影响存在差异；参考国泰+海通、国联+民生等近年案例，行业主题发酵与合并后业务整合节奏之间存在明显时滞，具体走向以公司公告与监管审批为准。</p>
+    
+      <p class="floor-lead">历史上类似情形中，券商合并方案自公告至落地通常呈&quot;公告</p>
+      <div class="flow">
+        
+          <div class="flow-step">公告</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">停牌</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">方案出具</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">复牌</div>
+          
+      </div>
   </section>
 
   <section class="floor floor-risk" style="animation-delay: 0.55s;">
@@ -308,7 +500,6 @@
       <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
     </ul>
   </section>
-
   <footer class="footer">
     
     <p class="sources-title">信息来源</p>
@@ -317,7 +508,6 @@
     </ul>
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>
-
 </div>
 </body>
 </html>

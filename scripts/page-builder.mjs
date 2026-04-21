@@ -9,6 +9,13 @@
  *   node scripts/page-builder.mjs --all                  # 扫描 docs/posts/ + examples/
  *
  * 输出：export/YYYY-MM-DD/NN-<slug>.html
+ *
+ * 可视化启发式（兼顾规范美学与内容分层）：
+ *   - Floor 段内含 markdown 表格 → 渲染为 stat-grid 大数字卡
+ *   - Floor 段内含 ①②③ 粗体编号列表 → 渲染为 numbered card-grid
+ *   - Floor 段末尾出现 "三/四项抓手：A、B、C" → 渲染为 chip-list
+ *   - Floor 段内含 "A → B → C" 流程 → 渲染为 flow timeline
+ *   - 其余回落为纯文本段落
  */
 
 import fs from 'node:fs';
@@ -19,8 +26,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 // ============================================================
-// 10 大类 × 20 子类色彩主题（对齐 SKILL.md Step 6.2）
-// 每个 theme 定义：Hero 渐变三色、accent 主色、accent-bg 柔调、cat 分类名
+// 20 子类色彩主题（对齐 SKILL.md Step 6.2）
 // ============================================================
 const THEMES = {
   '1A': { hero: ['#0c1e4e', '#1e3a8a', '#3b82f6'], accent: '#1e40af', soft: '#dbeafe', cat: '货币政策宽松', tag: '1A' },
@@ -46,7 +52,7 @@ const THEMES = {
 };
 
 // ============================================================
-// 解析 YAML frontmatter（简化版，不依赖 gray-matter）
+// Frontmatter & Body 解析
 // ============================================================
 function parseFrontmatter(raw) {
   const m = raw.match(/^---\r?\n([\s\S]+?)\r?\n---\r?\n([\s\S]+)$/);
@@ -63,11 +69,10 @@ function parseFrontmatter(raw) {
   return { fm, body: m[2] };
 }
 
-// 解析正文：提取 **粗体**：段落 + Sources 列表
 function parseBody(body) {
+  // 一个 section = 一个 **XXX**：... 直到下一个 **标题** 或 === 或 --- 为止
   const sections = [];
-  // 抓 **XXX**：... 的段落（支持中英文冒号）
-  const reSection = /\*\*([^*\n]+?)\*\*\s*[:：]\s*([\s\S]+?)(?=\n\s*\n\*\*|\n\s*\n###|\n\s*\n---|\*本文)/g;
+  const reSection = /(?:^|\n)\*\*([^*\n]+?)\*\*\s*[：:]\s*([\s\S]+?)(?=\n\s*\n?\*\*[^*\n]+?\*\*\s*[：:]|\n\s*###\s|\n\s*---\s*\n|\n\s*\*本文|$)/g;
   let match;
   while ((match = reSection.exec(body)) !== null) {
     sections.push({
@@ -76,7 +81,7 @@ function parseBody(body) {
     });
   }
 
-  // 抓 Sources
+  // Sources
   const sources = [];
   const srcBlock = body.match(/###\s*Sources?\s*\n([\s\S]+?)(?=\n---|\*本文|$)/i);
   if (srcBlock) {
@@ -86,15 +91,178 @@ function parseBody(body) {
       sources.push({ title: sm[1], url: sm[2] });
     }
   }
-
   return { sections, sources };
 }
 
 // ============================================================
-// HTML 渲染（楼层化 + UI 规范）
+// 可视化启发式识别
 // ============================================================
 function isRiskSection(title) {
   return /风险|局限|警示|Risk/i.test(title);
+}
+
+// 识别 ①②③ 粗体编号卡片
+function extractNumberedCards(content) {
+  const CIRCLED = '①②③④⑤⑥⑦⑧⑨⑩';
+  const reItem = new RegExp(`[${CIRCLED}]\\s*\\*\\*([^*\\n]+?)\\*\\*\\s*[：:]\\s*([^${CIRCLED}]+)`, 'g');
+  const cards = [];
+  let m;
+  while ((m = reItem.exec(content)) !== null) {
+    cards.push({
+      title: m[1].trim(),
+      desc: m[2].trim().replace(/[；;。]+$/, '').replace(/^[；;]+/, ''),
+    });
+  }
+  return cards;
+}
+
+// 识别 Lead text（① 之前的引导句）
+function extractLead(content) {
+  const idx = content.search(/[①②③④⑤⑥⑦⑧⑨⑩]/);
+  if (idx === -1) return content;
+  return content.slice(0, idx).replace(/[——\-–]+$/, '').trim();
+}
+
+// 识别"抓手/要点"后的列表
+function extractChips(content) {
+  // 匹配 "三项抓手：A、B、C" 或 "可观察三项抓手：A；B；C"
+  const m = content.match(/(?:三|四|五|六|七)(?:项|大|个)(?:抓手|要点|维度|方面|信号|条件|机会|方向|条款|亮点)[：:]\s*([^。\n]+)/);
+  if (!m) return null;
+  const items = m[1].split(/[、；;,，]/).map(s => s.trim().replace(/^\*\*|\*\*$/g, '')).filter(Boolean);
+  return items.length >= 2 ? items : null;
+}
+
+// 识别流程："A → B → C" 或 "A到B到C"
+function extractFlow(content) {
+  // 查找 "XX → YY → ZZ" 模式（允许中间 2-4 个步骤）
+  const m = content.match(/([\w\d\u4e00-\u9fa5]{2,12})\s*[→⇒>]\s*([\w\d\u4e00-\u9fa5]{2,12})\s*[→⇒>]\s*([\w\d\u4e00-\u9fa5]{2,12})(?:\s*[→⇒>]\s*([\w\d\u4e00-\u9fa5]{2,12}))?/);
+  if (!m) return null;
+  return [m[1], m[2], m[3], m[4]].filter(Boolean);
+}
+
+// 识别 markdown 表格（stat grid 来源）
+function extractTable(content) {
+  const m = content.match(/\|([^\n|]+)\|([^\n|]+)\|([^\n|]*)\|?\s*\n\s*\|[\s\-:|]+\|\s*\n((?:\s*\|[^\n]+\|\s*\n?)+)/);
+  if (!m) return null;
+  const headers = [m[1], m[2], m[3]].map(s => s.trim()).filter(Boolean);
+  const bodyLines = m[4].trim().split('\n');
+  const rows = bodyLines.map(line => {
+    const cells = line.split('|').slice(1, -1).map(c => c.trim());
+    return cells;
+  });
+  return { headers, rows };
+}
+
+// 提取最突出的数字 highlight（如 "17—20 亿"）— 保留接口占位，stat 当前由 markdown table 触发
+function extractStats(content, limit = 4) {
+  const units = '万|亿|％|%|GWh|MW|kg|吨|倍|颗|家|次|元|美元';
+  const re = new RegExp(`(?:\\*\\*)?(\\d+(?:\\.\\d+)?(?:[—~至]\\d+(?:\\.\\d+)?)?[+\\-]?(?:${units})?)(?:\\*\\*)?`, 'g');
+  const stats = [];
+  let m;
+  while ((m = re.exec(content)) !== null && stats.length < limit) {
+    const raw = m[1];
+    if (!/\d/.test(raw) || raw.length < 2) continue;
+    stats.push(raw);
+  }
+  return stats;
+}
+
+// ============================================================
+// HTML 渲染
+// ============================================================
+function renderFloorBody(content) {
+  // 1. Markdown table → stat-grid（优先级最高）
+  const table = extractTable(content);
+  if (table && table.rows.length >= 2) {
+    const preTable = content.split(/\|/)[0].trim();
+    return `
+      ${preTable ? `<p class="floor-lead">${formatInline(preTable)}</p>` : ''}
+      <div class="stat-grid">
+        ${table.rows.map(r => `
+          <div class="stat">
+            <div class="stat-value">${escape(r[1] || '')}</div>
+            <div class="stat-label">${escape(r[0] || '')}</div>
+            ${r[2] ? `<div class="stat-delta">${escape(r[2])}</div>` : ''}
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // 2. ①②③ 粗体编号 → card-grid
+  const cards = extractNumberedCards(content);
+  if (cards.length >= 2) {
+    const lead = extractLead(content);
+    const tail = afterNumberedContent(content);
+    return `
+      ${lead ? `<p class="floor-lead">${formatInline(lead)}</p>` : ''}
+      <div class="card-grid">
+        ${cards.map((c, i) => `
+          <div class="mini-card">
+            <span class="mini-card-num">${i + 1}</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">${formatInline(c.title)}</p>
+              <p class="mini-card-desc">${formatInline(c.desc)}</p>
+            </div>
+          </div>`).join('')}
+      </div>
+      ${tail ? `<p class="floor-tail">${formatInline(tail)}</p>` : ''}`;
+  }
+
+  // 3. 流程时间轴
+  const flow = extractFlow(content);
+  if (flow && flow.length >= 3) {
+    const lead = content.split(/[→⇒>]/)[0].trim().replace(/[——\-–]+$/, '').trim();
+    return `
+      ${lead ? `<p class="floor-lead">${formatInline(lead)}</p>` : ''}
+      <div class="flow">
+        ${flow.map((step, i) => `
+          <div class="flow-step">${escape(step)}</div>
+          ${i < flow.length - 1 ? '<div class="flow-arrow">→</div>' : ''}`).join('')}
+      </div>`;
+  }
+
+  // 4. 抓手/要点 → chip list（追加到段落末）
+  const chips = extractChips(content);
+  if (chips) {
+    const beforeChips = content.replace(/(?:三|四|五|六|七)(?:项|大|个)(?:抓手|要点|维度|方面|信号|条件|机会|方向|条款|亮点)[：:][^。\n]+/, '').trim();
+    return `
+      ${beforeChips ? `<p class="floor-body">${formatInline(beforeChips)}</p>` : ''}
+      <div class="chips">
+        ${chips.map((s, i) => `<span class="chip"><span class="chip-num">${i + 1}</span>${escape(s)}</span>`).join('')}
+      </div>`;
+  }
+
+  // 5. 回落纯文本
+  return `<p class="floor-body">${formatInline(content)}</p>`;
+}
+
+function afterNumberedContent(content) {
+  // 提取 ⑤ 或最后一个 ① 后再接 "以上仅为..." 这类尾注
+  const m = content.match(/(?:以上[^\n]+|综上[^\n]+|不涉及[^\n]+|具体以[^\n]+)/);
+  return m ? m[0].trim() : '';
+}
+
+function renderRiskFloor(section, idx, color) {
+  const items = parseRiskItems(section.content);
+  return `
+  <section class="floor floor-risk" style="animation-delay: ${0.15 + idx * 0.1}s;">
+    <div class="floor-head">
+      <span class="floor-num floor-num-risk">${idx + 1}</span>
+      <h2 class="floor-title">${escape(section.title)}</h2>
+      <span class="floor-tag floor-tag-risk">需留意</span>
+    </div>
+    <ul class="risk-list">
+      ${items.map((item, i) => `
+      <li class="risk-item"><span class="risk-item-num">${i + 1}</span>${formatInline(item)}</li>`).join('')}
+    </ul>
+  </section>`;
+}
+
+function parseRiskItems(content) {
+  return content
+    .replace(/\s+/g, ' ')
+    .replace(/[①②③④⑤⑥⑦⑧⑨⑩]\s*/g, '\n')
+    .replace(/\s*[;；]\s*/g, '\n')
+    .split('\n').map(s => s.trim()).filter(Boolean);
 }
 
 function renderHTML({ fm, sections, sources }) {
@@ -102,10 +270,8 @@ function renderHTML({ fm, sections, sources }) {
   const theme = THEMES[catCode] || THEMES['1A'];
   const riskSection = sections.find(s => isRiskSection(s.title));
   const bodySections = sections.filter(s => !isRiskSection(s.title));
-
-  // 确保最多 4 个普通 Floor + 1 个 Risk Floor
-  const floors = bodySections.slice(0, 4);
-  const floorEmojis = ['✦', '❖', '◆', '◎'];
+  const floors = bodySections.slice(0, 5);
+  const floorTags = ['方案速览', '主体拆解', '传导观察', '节奏/周期', '信号梳理'];
 
   const title = fm.title || '未命名解读';
   const subtitle = fm.subtitle || '';
@@ -118,23 +284,14 @@ function renderHTML({ fm, sections, sources }) {
     <div class="floor-head">
       <span class="floor-num">${i + 1}</span>
       <h2 class="floor-title">${escape(s.title)}</h2>
-      <span class="floor-tag">${floorEmojis[i]}</span>
+      <span class="floor-tag">${floorTags[i] || ''}</span>
     </div>
-    <p class="floor-body">${formatInline(s.content)}</p>
+    ${renderFloorBody(s.content)}
   </section>`).join('');
 
-  const riskHTML = riskSection ? `
-  <section class="floor floor-risk" style="animation-delay: ${0.15 + floors.length * 0.1}s;">
-    <div class="floor-head">
-      <span class="floor-num floor-num-risk">${floors.length + 1}</span>
-      <h2 class="floor-title">${escape(riskSection.title)}</h2>
-      <span class="floor-tag floor-tag-risk">需留意</span>
-    </div>
-    <ul class="risk-list">
-      ${parseRiskItems(riskSection.content).map((item, i) => `
-      <li class="risk-item"><span class="risk-item-num">${i + 1}</span>${formatInline(item)}</li>`).join('')}
-    </ul>
-  </section>` : '';
+  const riskHTML = riskSection
+    ? renderRiskFloor(riskSection, floors.length, theme.accent)
+    : '';
 
   const sourcesHTML = sources.length ? `
     <p class="sources-title">信息来源</p>
@@ -186,7 +343,7 @@ function renderHTML({ fm, sections, sources }) {
   }
   .page { max-width: 760px; margin: 0 auto; padding: 28px 18px 56px; }
 
-  /* ============ Hero · 非对称 + 噪点 ============ */
+  /* ============ Hero ============ */
   .hero {
     background:
       radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
@@ -244,9 +401,8 @@ function renderHTML({ fm, sections, sources }) {
     padding-top: 14px;
     border-top: 1px dashed rgba(255,255,255,0.22);
   }
-  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ============ Floor · 非对称卡片 ============ */
+  /* ============ Floor ============ */
   .floor {
     background: var(--card);
     border-radius: 16px;
@@ -258,8 +414,8 @@ function renderHTML({ fm, sections, sources }) {
     animation: rise 0.55s ease-out both;
     position: relative;
   }
-  .floor:nth-child(even) { transform: translateX(8px); }    /* 非对称 */
-  .floor:nth-child(odd)  { transform: translateX(-4px); }
+  .floor:nth-child(even) { transform: translateX(6px); }
+  .floor:nth-child(odd)  { transform: translateX(-3px); }
   .floor-head {
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 14px;
@@ -283,7 +439,6 @@ function renderHTML({ fm, sections, sources }) {
     color: var(--text);
     margin: 0;
     flex: 1;
-    letter-spacing: -0.005em;
   }
   .floor-tag {
     font-size: 11px;
@@ -295,20 +450,157 @@ function renderHTML({ fm, sections, sources }) {
     color: var(--accent);
   }
   .floor-tag-risk { background: var(--risk-bg); color: var(--risk); }
-  .floor-body {
+  .floor-lead {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .floor-body, .floor-tail {
     font-size: 15px;
     color: #334155;
     line-height: 1.85;
     margin: 0;
     text-align: justify;
   }
-  .floor-body strong {
+  .floor-tail { margin-top: 12px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  .floor-body strong, .floor-lead strong {
     color: var(--accent);
     font-weight: 600;
-    padding: 0 1px;
   }
 
-  /* ============ Risk 列表 ============ */
+  /* ============ Stat Grid · 大数字 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: linear-gradient(135deg, var(--accent-bg) 0%, ${hexA(theme.accent, 0.06)} 100%);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    border-left: 3px solid var(--accent);
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stat-delta {
+    font-size: 11.5px;
+    color: #059669;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* ============ Card Grid · ①②③ 编号卡 ============ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .mini-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .mini-card-num {
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .mini-card-body { flex: 1; }
+  .mini-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .mini-card-desc {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ============ Flow · 时间轴 ============ */
+  .flow {
+    display: flex; align-items: center;
+    gap: 6px;
+    background: var(--accent-bg);
+    padding: 14px;
+    border-radius: 12px;
+    margin: 6px 0 4px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1; min-width: 80px;
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid ${hexA(theme.accent, 0.2)};
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ============ Chips · 抓手列表 ============ */
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid ${hexA(theme.accent, 0.2)};
+  }
+  .chip-num {
+    background: var(--accent);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center; justify-content: center;
+  }
+
+  /* ============ Risk · 风险列表 ============ */
   .risk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
   .risk-item {
     display: flex; gap: 12px;
@@ -377,7 +669,7 @@ function renderHTML({ fm, sections, sources }) {
     letter-spacing: 0.03em;
   }
 
-  /* ============ 移动端 ============ */
+  /* 移动端 */
   @media (max-width: 640px) {
     .page { padding: 18px 12px 40px; }
     .hero { padding: 26px 20px; }
@@ -385,13 +677,16 @@ function renderHTML({ fm, sections, sources }) {
     .hero-subtitle { font-size: 14.5px; }
     .floor { padding: 18px 18px 14px; }
     .floor:nth-child(even), .floor:nth-child(odd) { transform: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
     body { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header class="hero">
     <span class="hero-badge">${theme.tag} · ${escape(theme.cat)}</span>
     <h1 class="hero-title">${escape(title)}</h1>
@@ -402,15 +697,12 @@ function renderHTML({ fm, sections, sources }) {
       ${wordCount ? `<span>${wordCount} 字</span>` : ''}
     </div>
   </header>
-
 ${floorsHTML}
 ${riskHTML}
-
   <footer class="footer">
     ${sourcesHTML}
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>
-
 </div>
 </body>
 </html>`;
@@ -426,20 +718,10 @@ function escape(s) {
 }
 
 function formatInline(s) {
-  // 把 **bold** 转换为 <strong>，把 数字/百分号 不处理（保留原样）
   let html = escape(s);
   html = html.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\n/g, ' ');
   return html;
-}
-
-function parseRiskItems(content) {
-  // 风险段落通常用 ① ② ③ 或 ; 分隔
-  const normalized = content
-    .replace(/\s+/g, ' ')
-    .replace(/[①②③④⑤⑥⑦⑧⑨⑩]\s*/g, '\n')
-    .replace(/\s*[;；]\s*/g, '\n');
-  return normalized.split('\n').map(s => s.trim()).filter(Boolean);
 }
 
 function hexA(hex, alpha) {
@@ -450,20 +732,14 @@ function hexA(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-// ============================================================
-// 文件输出
-// ============================================================
 function computeOutPath(mdPath, fm) {
   const date = fm.publish_date || fm.event_date || new Date().toISOString().slice(0, 10);
   const base = path.basename(mdPath, '.md');
-  // 统一剥离日期前缀 / 序号前缀，得到干净 slug
   const slug = base
-    .replace(/^\d{4}-\d{2}-\d{2}-/, '')   // 去 YYYY-MM-DD-
-    .replace(/^\d{1,3}-/, '');             // 去 NN-
+    .replace(/^\d{4}-\d{2}-\d{2}-/, '')
+    .replace(/^\d{1,3}-/, '');
   const outDir = path.join(ROOT, 'export', date);
   fs.mkdirSync(outDir, { recursive: true });
-
-  // 若该 slug 对应的文件已存在，覆盖同名而非递增编号
   const existing = fs.readdirSync(outDir)
     .filter(f => f.endsWith('.html') && !f.includes(slug));
   const idx = String(existing.length + 1).padStart(2, '0');
@@ -491,19 +767,11 @@ function build(mdPath) {
   return outPath;
 }
 
-// ============================================================
-// CLI 入口
-// ============================================================
 function main() {
   const argv = process.argv.slice(2);
   let files = [];
-
   if (argv.includes('--all') || argv.length === 0) {
-    const scanDirs = [
-      path.join(ROOT, 'docs/posts'),
-      path.join(ROOT, 'examples'),
-    ];
-    for (const d of scanDirs) {
+    for (const d of [path.join(ROOT, 'docs/posts'), path.join(ROOT, 'examples')]) {
       if (!fs.existsSync(d)) continue;
       for (const f of fs.readdirSync(d)) {
         if (f.endsWith('.md') && !f.toUpperCase().includes('README')) {

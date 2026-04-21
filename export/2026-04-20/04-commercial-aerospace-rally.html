@@ -42,7 +42,7 @@
   }
   .page { max-width: 760px; margin: 0 auto; padding: 28px 18px 56px; }
 
-  /* ============ Hero · 非对称 + 噪点 ============ */
+  /* ============ Hero ============ */
   .hero {
     background:
       radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
@@ -100,9 +100,8 @@
     padding-top: 14px;
     border-top: 1px dashed rgba(255,255,255,0.22);
   }
-  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ============ Floor · 非对称卡片 ============ */
+  /* ============ Floor ============ */
   .floor {
     background: var(--card);
     border-radius: 16px;
@@ -114,8 +113,8 @@
     animation: rise 0.55s ease-out both;
     position: relative;
   }
-  .floor:nth-child(even) { transform: translateX(8px); }    /* 非对称 */
-  .floor:nth-child(odd)  { transform: translateX(-4px); }
+  .floor:nth-child(even) { transform: translateX(6px); }
+  .floor:nth-child(odd)  { transform: translateX(-3px); }
   .floor-head {
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 14px;
@@ -139,7 +138,6 @@
     color: var(--text);
     margin: 0;
     flex: 1;
-    letter-spacing: -0.005em;
   }
   .floor-tag {
     font-size: 11px;
@@ -151,20 +149,157 @@
     color: var(--accent);
   }
   .floor-tag-risk { background: var(--risk-bg); color: var(--risk); }
-  .floor-body {
+  .floor-lead {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .floor-body, .floor-tail {
     font-size: 15px;
     color: #334155;
     line-height: 1.85;
     margin: 0;
     text-align: justify;
   }
-  .floor-body strong {
+  .floor-tail { margin-top: 12px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  .floor-body strong, .floor-lead strong {
     color: var(--accent);
     font-weight: 600;
-    padding: 0 1px;
   }
 
-  /* ============ Risk 列表 ============ */
+  /* ============ Stat Grid · 大数字 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(194, 65, 12, 0.06) 100%);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    border-left: 3px solid var(--accent);
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stat-delta {
+    font-size: 11.5px;
+    color: #059669;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* ============ Card Grid · ①②③ 编号卡 ============ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .mini-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .mini-card-num {
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .mini-card-body { flex: 1; }
+  .mini-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .mini-card-desc {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ============ Flow · 时间轴 ============ */
+  .flow {
+    display: flex; align-items: center;
+    gap: 6px;
+    background: var(--accent-bg);
+    padding: 14px;
+    border-radius: 12px;
+    margin: 6px 0 4px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1; min-width: 80px;
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid rgba(194, 65, 12, 0.2);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ============ Chips · 抓手列表 ============ */
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(194, 65, 12, 0.2);
+  }
+  .chip-num {
+    background: var(--accent);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center; justify-content: center;
+  }
+
+  /* ============ Risk · 风险列表 ============ */
   .risk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
   .risk-item {
     display: flex; gap: 12px;
@@ -233,7 +368,7 @@
     letter-spacing: 0.03em;
   }
 
-  /* ============ 移动端 ============ */
+  /* 移动端 */
   @media (max-width: 640px) {
     .page { padding: 18px 12px 40px; }
     .hero { padding: 26px 20px; }
@@ -241,13 +376,16 @@
     .hero-subtitle { font-size: 14.5px; }
     .floor { padding: 18px 18px 14px; }
     .floor:nth-child(even), .floor:nth-child(odd) { transform: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
     body { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header class="hero">
     <span class="hero-badge">2A · 新兴产业重磅政策</span>
     <h1 class="hero-title">商业航天拉升，密集发射共振催化</h1>
@@ -259,36 +397,91 @@
     </div>
   </header>
 
-
   <section class="floor floor-1" style="animation-delay: 0.15s;">
     <div class="floor-head">
       <span class="floor-num">1</span>
       <h2 class="floor-title">事件核心</h2>
-      <span class="floor-tag">✦</span>
+      <span class="floor-tag">方案速览</span>
     </div>
-    <p class="floor-body">2026年4月，A 股商业航天方向集体拉升——4月14日板块主力资金净流入超 22 亿元，多只相关方向短期活跃。驱动因素呈&quot;密集发射+大会节点+海外映射&quot;三重共振——① <strong>密集发射</strong>：4/7 长征八号以一箭18星送入千帆第七批组网；4/9 长征六号改发射21颗低轨互联网卫星；4/14 力箭一号发射8颗卫星；发射频次达阶段性新高。② <strong>大会节点</strong>：2026 中国航天大会 4/23—26、中国航天日主场活动 4/24 均在成都举办。③ <strong>海外映射</strong>：亚马逊接近完成对卫星运营商 Globalstar 的收购，全球商业航天并购节奏或带来映射效应。</p>
+    
+      <p class="floor-lead">2026年4月，A 股商业航天方向集体拉升——4月14日板块主力资金净流入超 22 亿元，多只相关方向短期活跃。驱动因素呈&quot;密集发射+大会节点+海外映射&quot;三重共振</p>
+      <div class="card-grid">
+        
+          <div class="mini-card">
+            <span class="mini-card-num">1</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">密集发射</p>
+              <p class="mini-card-desc">4/7 长征八号以一箭18星送入千帆第七批组网；4/9 长征六号改发射21颗低轨互联网卫星；4/14 力箭一号发射8颗卫星；发射频次达阶段性新高</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">2</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">大会节点</p>
+              <p class="mini-card-desc">2026 中国航天大会 4/23—26、中国航天日主场活动 4/24 均在成都举办</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">3</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">海外映射</p>
+              <p class="mini-card-desc">亚马逊接近完成对卫星运营商 Globalstar 的收购，全球商业航天并购节奏或带来映射效应</p>
+            </div>
+          </div>
+      </div>
+      
   </section>
   <section class="floor floor-2" style="animation-delay: 0.25s;">
     <div class="floor-head">
       <span class="floor-num">2</span>
       <h2 class="floor-title">产业链观察</h2>
-      <span class="floor-tag">❖</span>
+      <span class="floor-tag">主体拆解</span>
     </div>
-    <p class="floor-body">三层结构拉通梳理——① <strong>上游（火箭+发射场）</strong>：长征系列运载火箭、商业可回收火箭（长征十号乙计划 4/28 首飞并同步验证海上网回收），发射场吞吐量、测控与遥测配套环节；② <strong>中游（卫星制造+核心部组件）</strong>：卫星本体、T/R 芯片、相控阵天线、激光星间链路、星载原子钟等产业环节，批产能力与国产化率是核心观察指标；③ <strong>下游（应用+终端）</strong>：卫星互联网运营、地面站、终端（手机直连卫星、船载/机载终端）、地理信息与遥感数据服务。以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
+    
+      <p class="floor-lead">三层结构拉通梳理</p>
+      <div class="card-grid">
+        
+          <div class="mini-card">
+            <span class="mini-card-num">1</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">上游（火箭+发射场）</p>
+              <p class="mini-card-desc">长征系列运载火箭、商业可回收火箭（长征十号乙计划 4/28 首飞并同步验证海上网回收），发射场吞吐量、测控与遥测配套环节</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">2</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">中游（卫星制造+核心部组件）</p>
+              <p class="mini-card-desc">卫星本体、T/R 芯片、相控阵天线、激光星间链路、星载原子钟等产业环节，批产能力与国产化率是核心观察指标</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">3</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">下游（应用+终端）</p>
+              <p class="mini-card-desc">卫星互联网运营、地面站、终端（手机直连卫星、船载/机载终端）、地理信息与遥感数据服务。以上为产业环节颗粒度观察，不涉及具体公司推荐</p>
+            </div>
+          </div>
+      </div>
+      <p class="floor-tail">以上为产业环节颗粒度观察，不涉及具体公司推荐。</p>
   </section>
   <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
       <span class="floor-num">3</span>
       <h2 class="floor-title">市场节奏</h2>
-      <span class="floor-tag">◆</span>
+      <span class="floor-tag">传导观察</span>
     </div>
-    <p class="floor-body">短期（2—4 周）情绪催化较强，密集事件窗口连续出现——4/23—26 航天大会、4/24 航天日主场、4/28 长征十号乙首飞，或形成连续关注度。中期（3—6 月）可观察三项抓手：可回收火箭商业发射成本下降验证、千帆与星网组网达成率、下游手机直连与偏远地区通信商业化试点。需区分&quot;事件催化情绪&quot;与&quot;业绩兑现&quot;的时间差。</p>
+    
+      <p class="floor-body">短期（2—4 周）情绪催化较强，密集事件窗口连续出现——4/23—26 航天大会、4/24 航天日主场、4/28 长征十号乙首飞，或形成连续关注度。中期（3—6 月）可观察。需区分&quot;事件催化情绪&quot;与&quot;业绩兑现&quot;的时间差。</p>
+      <div class="chips">
+        <span class="chip"><span class="chip-num">1</span>可回收火箭商业发射成本下降验证</span><span class="chip"><span class="chip-num">2</span>千帆与星网组网达成率</span><span class="chip"><span class="chip-num">3</span>下游手机直连与偏远地区通信商业化试点</span>
+      </div>
   </section>
   <section class="floor floor-4" style="animation-delay: 0.45000000000000007s;">
     <div class="floor-head">
       <span class="floor-num">4</span>
       <h2 class="floor-title">竞争格局</h2>
-      <span class="floor-tag">◎</span>
+      <span class="floor-tag">节奏/周期</span>
     </div>
     <p class="floor-body">国内&quot;一超多强&quot;格局下，卫星制造端批产能力较强的企业具备规模优势；核心部组件国产化率持续提升，龙头集中态势较为明确；火箭端国家队与民营双线并行，可回收火箭商业化进度或成为后续分化关键。与海外对标 Starlink（在轨约 6000+ 颗）差距在缩小，但短期仍存在数量级差距。</p>
   </section>
@@ -308,7 +501,6 @@
       <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
     </ul>
   </section>
-
   <footer class="footer">
     
     <p class="sources-title">信息来源</p>
@@ -317,7 +509,6 @@
     </ul>
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>
-
 </div>
 </body>
 </html>

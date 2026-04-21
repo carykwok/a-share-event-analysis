@@ -42,7 +42,7 @@
   }
   .page { max-width: 760px; margin: 0 auto; padding: 28px 18px 56px; }
 
-  /* ============ Hero · 非对称 + 噪点 ============ */
+  /* ============ Hero ============ */
   .hero {
     background:
       radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
@@ -100,9 +100,8 @@
     padding-top: 14px;
     border-top: 1px dashed rgba(255,255,255,0.22);
   }
-  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ============ Floor · 非对称卡片 ============ */
+  /* ============ Floor ============ */
   .floor {
     background: var(--card);
     border-radius: 16px;
@@ -114,8 +113,8 @@
     animation: rise 0.55s ease-out both;
     position: relative;
   }
-  .floor:nth-child(even) { transform: translateX(8px); }    /* 非对称 */
-  .floor:nth-child(odd)  { transform: translateX(-4px); }
+  .floor:nth-child(even) { transform: translateX(6px); }
+  .floor:nth-child(odd)  { transform: translateX(-3px); }
   .floor-head {
     display: flex; align-items: center; gap: 12px;
     margin-bottom: 14px;
@@ -139,7 +138,6 @@
     color: var(--text);
     margin: 0;
     flex: 1;
-    letter-spacing: -0.005em;
   }
   .floor-tag {
     font-size: 11px;
@@ -151,20 +149,157 @@
     color: var(--accent);
   }
   .floor-tag-risk { background: var(--risk-bg); color: var(--risk); }
-  .floor-body {
+  .floor-lead {
+    font-size: 14.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin: 0 0 14px;
+  }
+  .floor-body, .floor-tail {
     font-size: 15px;
     color: #334155;
     line-height: 1.85;
     margin: 0;
     text-align: justify;
   }
-  .floor-body strong {
+  .floor-tail { margin-top: 12px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  .floor-body strong, .floor-lead strong {
     color: var(--accent);
     font-weight: 600;
-    padding: 0 1px;
   }
 
-  /* ============ Risk 列表 ============ */
+  /* ============ Stat Grid · 大数字 ============ */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin: 6px 0 4px;
+  }
+  .stat {
+    background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(4, 120, 87, 0.06) 100%);
+    border-radius: 12px;
+    padding: 14px 12px;
+    text-align: center;
+    border-left: 3px solid var(--accent);
+  }
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .stat-label {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .stat-delta {
+    font-size: 11.5px;
+    color: #059669;
+    font-family: var(--font-mono);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  /* ============ Card Grid · ①②③ 编号卡 ============ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .mini-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent);
+  }
+  .mini-card-num {
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fff;
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .mini-card-body { flex: 1; }
+  .mini-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 4px;
+  }
+  .mini-card-desc {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ============ Flow · 时间轴 ============ */
+  .flow {
+    display: flex; align-items: center;
+    gap: 6px;
+    background: var(--accent-bg);
+    padding: 14px;
+    border-radius: 12px;
+    margin: 6px 0 4px;
+    flex-wrap: wrap;
+  }
+  .flow-step {
+    flex: 1; min-width: 80px;
+    text-align: center;
+    padding: 10px 8px;
+    background: var(--card);
+    border-radius: 8px;
+    border: 1px solid rgba(4, 120, 87, 0.2);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    font-family: var(--font-display);
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* ============ Chips · 抓手列表 ============ */
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin: 6px 0 4px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(4, 120, 87, 0.2);
+  }
+  .chip-num {
+    background: var(--accent);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center; justify-content: center;
+  }
+
+  /* ============ Risk · 风险列表 ============ */
   .risk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
   .risk-item {
     display: flex; gap: 12px;
@@ -233,7 +368,7 @@
     letter-spacing: 0.03em;
   }
 
-  /* ============ 移动端 ============ */
+  /* 移动端 */
   @media (max-width: 640px) {
     .page { padding: 18px 12px 40px; }
     .hero { padding: 26px 20px; }
@@ -241,13 +376,16 @@
     .hero-subtitle { font-size: 14.5px; }
     .floor { padding: 18px 18px 14px; }
     .floor:nth-child(even), .floor:nth-child(odd) { transform: none; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
     body { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
-
   <header class="hero">
     <span class="hero-badge">10B · 工业金属/贵金属异动</span>
     <h1 class="hero-title">锂电业绩共振，产业链关注回升</h1>
@@ -259,28 +397,84 @@
     </div>
   </header>
 
-
   <section class="floor floor-1" style="animation-delay: 0.15s;">
     <div class="floor-head">
       <span class="floor-num">1</span>
       <h2 class="floor-title">价格驱动</h2>
-      <span class="floor-tag">✦</span>
+      <span class="floor-tag">方案速览</span>
     </div>
-    <p class="floor-body">2026年4月20日，锂矿龙头公告 2026 年第一季度归母净利润预计 <strong>17—20 亿元</strong>，同比增长 <strong>1530.31%—1818.01%</strong>；扣非净利 16—19.6 亿元，同比+3501.54%—4311.88%。驱动因素：锂产品销售均价明显增长、联营公司 SQM 投资收益大增、新能源下游需求回暖。当前国内电池级碳酸锂价格稳定在 15 万元/吨&quot;舒适区&quot;，4 月中国锂电市场排产约 235 GWh 环比+7.3%，5 月环比+5—10%、同比+60—70%。</p>
+    
+      <p class="floor-lead">2026年4月20日，锂矿龙头公告 2026 年第一季度业绩预告，驱动因素来自锂产品销售均价明显增长、联营公司 SQM 投资收益大增、新能源下游需求回暖。</p>
+      <div class="stat-grid">
+        
+          <div class="stat">
+            <div class="stat-value">17—20 亿</div>
+            <div class="stat-label">Q1 归母净利润</div>
+            <div class="stat-delta">+1530.31% ~ +1818.01%</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">16—19.6 亿</div>
+            <div class="stat-label">Q1 扣非净利</div>
+            <div class="stat-delta">+3501.54% ~ +4311.88%</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">15 万/吨</div>
+            <div class="stat-label">碳酸锂价</div>
+            <div class="stat-delta">行业舒适区</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">235 GWh</div>
+            <div class="stat-label">4 月锂电排产</div>
+            <div class="stat-delta">环比 +7.3%</div>
+          </div>
+      </div>
   </section>
   <section class="floor floor-2" style="animation-delay: 0.25s;">
     <div class="floor-head">
       <span class="floor-num">2</span>
       <h2 class="floor-title">上游弹性</h2>
-      <span class="floor-tag">❖</span>
+      <span class="floor-tag">主体拆解</span>
     </div>
-    <p class="floor-body">A 股锂产业链上游环节结构——① <strong>锂矿自给率较高的一体化龙头环节</strong>：业绩弹性相对较大，锂盐价格回暖直接映射至利润端；② <strong>纯锂盐加工环节</strong>：毛利对矿端价格更敏感；③ <strong>海外锂矿权益方环节</strong>：享受海外矿价与人民币汇率的双重因素；④ <strong>储能+动力电池头部环节</strong>：电池销量与业绩同步兑现，Q1 头部电池企业销量已超 200 GWh，营收与净利同步高增。以上为产业环节层面观察，不涉及具体公司推荐。</p>
+    
+      <p class="floor-lead">A 股锂产业链上游环节结构</p>
+      <div class="card-grid">
+        
+          <div class="mini-card">
+            <span class="mini-card-num">1</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">锂矿自给率较高的一体化龙头环节</p>
+              <p class="mini-card-desc">业绩弹性相对较大，锂盐价格回暖直接映射至利润端</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">2</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">纯锂盐加工环节</p>
+              <p class="mini-card-desc">毛利对矿端价格更敏感</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">3</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">海外锂矿权益方环节</p>
+              <p class="mini-card-desc">享受海外矿价与人民币汇率的双重因素</p>
+            </div>
+          </div>
+          <div class="mini-card">
+            <span class="mini-card-num">4</span>
+            <div class="mini-card-body">
+              <p class="mini-card-title">储能+动力电池头部环节</p>
+              <p class="mini-card-desc">电池销量与业绩同步兑现，Q1 头部电池企业销量已超 200 GWh，营收与净利同步高增。以上为产业环节层面观察，不涉及具体公司推荐</p>
+            </div>
+          </div>
+      </div>
+      <p class="floor-tail">以上为产业环节层面观察，不涉及具体公司推荐。</p>
   </section>
   <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
       <span class="floor-num">3</span>
       <h2 class="floor-title">下游压力</h2>
-      <span class="floor-tag">◆</span>
+      <span class="floor-tag">传导观察</span>
     </div>
     <p class="floor-body">锂价从低位回升至 15 万元/吨&quot;舒适区&quot;，上下游利益分配趋于均衡；对下游锂电池、新能源车、储能系统的成本端影响相对温和，未对终端价格构成明显压力，量价齐升格局或延续。</p>
   </section>
@@ -288,11 +482,22 @@
     <div class="floor-head">
       <span class="floor-num">4</span>
       <h2 class="floor-title">周期判断</h2>
-      <span class="floor-tag">◎</span>
+      <span class="floor-tag">节奏/周期</span>
     </div>
-    <p class="floor-body">关于本轮锂价走势性质，机构观点偏向&quot;紧平衡&quot;——2026 年锂资源或从供给过剩重回紧平衡状态，上半年新增供给偏低、下半年释放较多，呈&quot;前低后高&quot;节奏；中期可观察三项抓手：国内电池级碳酸锂现货价走势、锂电月度排产数据、储能装机与新能源车销量。</p>
+    
+      <p class="floor-body">关于本轮锂价走势性质，机构观点偏向&quot;紧平衡&quot;——2026 年锂资源或从供给过剩重回紧平衡状态，上半年新增供给偏低、下半年释放较多，呈&quot;前低后高&quot;节奏；中期可观察。</p>
+      <div class="chips">
+        <span class="chip"><span class="chip-num">1</span>国内电池级碳酸锂现货价走势</span><span class="chip"><span class="chip-num">2</span>锂电月度排产数据</span><span class="chip"><span class="chip-num">3</span>储能装机与新能源车销量</span>
+      </div>
   </section>
-
+  <section class="floor floor-5" style="animation-delay: 0.55s;">
+    <div class="floor-head">
+      <span class="floor-num">5</span>
+      <h2 class="floor-title">关注角度</h2>
+      <span class="floor-tag">信号梳理</span>
+    </div>
+    <p class="floor-body">矿山端（锂盐均价敏感）与冶炼加工端（加工费+产能利用率敏感）的业绩逻辑存在差异，具体走向以行业数据与公司公告为准。</p>
+  </section>
 
   <footer class="footer">
     
@@ -302,7 +507,6 @@
     </ul>
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>
-
 </div>
 </body>
 </html>
