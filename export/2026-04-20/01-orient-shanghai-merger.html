@@ -5,531 +5,315 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>东方拟购沪证，券商整合再落一子</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=JetBrains+Mono:wght@500;700&display=swap');
   :root {
     --text: #0f172a;
     --muted: #64748b;
     --border: #e2e8f0;
     --bg: #f8fafc;
     --card: #ffffff;
-
-    --core: #2563eb;     --core-bg: #eff6ff;     --core-soft: #dbeafe;
-    --benefit: #059669;  --benefit-bg: #ecfdf5;  --benefit-soft: #d1fae5;
-    --market: #ea580c;   --market-bg: #fff7ed;   --market-soft: #fed7aa;
-    --history: #7c3aed;  --history-bg: #f5f3ff;  --history-soft: #ddd6fe;
-    --risk: #dc2626;     --risk-bg: #fef2f2;     --risk-soft: #fecaca;
-
-    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --hero-1: #1e3a8a;
+    --hero-2: #2563eb;
+    --hero-3: #60a5fa;
+    --accent: #1d4ed8;
+    --accent-bg: #dbeafe;
+    --risk: #dc2626;
+    --risk-bg: #fef2f2;
+    --font-cn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", sans-serif;
+    --font-display: "Fraunces", "Source Han Serif SC", "Noto Serif SC", Georgia, serif;
+    --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
   }
   * { box-sizing: border-box; }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   body {
     margin: 0; padding: 0;
-    font-family: var(--font);
-    background: var(--bg);
+    font-family: var(--font-cn);
+    background:
+      radial-gradient(at 85% 10%, rgba(29, 78, 216, 0.08) 0%, transparent 50%),
+      radial-gradient(at 15% 90%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
+      var(--bg);
     color: var(--text);
-    line-height: 1.7;
-    font-size: 15.5px;
+    line-height: 1.75;
+    font-size: 16px;
+    letter-spacing: 0.01em;
   }
-  .page { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+  .page { max-width: 760px; margin: 0 auto; padding: 28px 18px 56px; }
 
-  /* ============ Hero ============ */
+  /* ============ Hero · 非对称 + 噪点 ============ */
   .hero {
-    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    background:
+      radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18) 0%, transparent 55%),
+      linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 55%, var(--hero-3) 100%);
     color: #fff;
-    border-radius: 16px;
-    padding: 28px 24px;
-    margin-bottom: 16px;
-    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.18);
+    border-radius: 20px;
+    padding: 34px 28px 30px 28px;
+    margin-bottom: 18px;
+    box-shadow: 0 14px 40px rgba(37, 99, 235, 0.35);
+    position: relative;
+    overflow: hidden;
+    animation: rise 0.6s ease-out 0.05s both;
   }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay; opacity: 0.55; pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
   .hero-badge {
     display: inline-block;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.22);
+    backdrop-filter: blur(6px);
     color: #fff;
-    font-size: 12px;
-    padding: 4px 12px;
+    font-size: 11.5px;
+    font-family: var(--font-mono);
+    padding: 5px 13px;
     border-radius: 999px;
-    margin-bottom: 14px;
-    letter-spacing: 0.5px;
+    margin-bottom: 18px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
   .hero-title {
-    font-size: 26px; font-weight: 700;
-    line-height: 1.35;
-    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 30px; font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
   }
   .hero-subtitle {
-    font-size: 15px;
+    font-size: 15.5px;
     color: rgba(255,255,255,0.92);
     font-weight: 400;
-    margin: 0 0 14px;
-    line-height: 1.6;
+    margin: 0 0 18px;
+    line-height: 1.7;
+    max-width: 90%;
   }
   .hero-meta {
-    display: flex; gap: 16px;
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
+    display: flex; gap: 18px;
+    font-size: 11.5px;
+    font-family: var(--font-mono);
+    color: rgba(255,255,255,0.72);
     flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(255,255,255,0.22);
   }
-  .hero-meta span::before { content: "·  "; }
-  .hero-meta span:first-child::before { content: ""; }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
 
-  /* ============ Floor (共用) ============ */
+  /* ============ Floor · 非对称卡片 ============ */
   .floor {
     background: var(--card);
-    border-radius: 14px;
-    padding: 22px 22px 18px;
+    border-radius: 16px;
+    padding: 22px 24px 20px;
     margin-bottom: 14px;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
     border: 1px solid var(--border);
+    opacity: 0;
+    animation: rise 0.55s ease-out both;
+    position: relative;
   }
+  .floor:nth-child(even) { transform: translateX(8px); }    /* 非对称 */
+  .floor:nth-child(odd)  { transform: translateX(-4px); }
   .floor-head {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
     padding-bottom: 12px;
     border-bottom: 1px dashed var(--border);
   }
   .floor-num {
-    width: 28px; height: 28px;
-    border-radius: 8px;
+    width: 30px; height: 30px;
+    border-radius: 9px;
     display: inline-flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 700;
+    font-family: var(--font-mono);
     color: #fff;
+    background: var(--accent);
+    box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
   }
+  .floor-num-risk { background: var(--risk); box-shadow: 0 2px 6px rgba(220,38,38,0.25); }
   .floor-title {
-    font-size: 17px; font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 18px; font-weight: 600;
     color: var(--text);
     margin: 0;
     flex: 1;
+    letter-spacing: -0.005em;
   }
   .floor-tag {
     font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 3px 10px;
+    border-radius: 5px;
     font-weight: 500;
+    font-family: var(--font-mono);
+    background: var(--accent-bg);
+    color: var(--accent);
   }
-
-  .floor-1 .floor-num { background: var(--core); }
-  .floor-1 .floor-tag { background: var(--core-bg); color: var(--core); }
-  .floor-2 .floor-num { background: var(--benefit); }
-  .floor-2 .floor-tag { background: var(--benefit-bg); color: var(--benefit); }
-  .floor-3 .floor-num { background: var(--market); }
-  .floor-3 .floor-tag { background: var(--market-bg); color: var(--market); }
-  .floor-4 .floor-num { background: var(--history); }
-  .floor-4 .floor-tag { background: var(--history-bg); color: var(--history); }
-  .floor-5 .floor-num { background: var(--risk); }
-  .floor-5 .floor-tag { background: var(--risk-bg); color: var(--risk); }
-
-  /* ============ Floor 1 · 核心条款 ============ */
-  .lead-text {
-    font-size: 14.5px; color: var(--muted); line-height: 1.75;
-    margin: 0 0 16px;
-  }
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .stat {
-    background: var(--core-bg);
-    border-radius: 10px;
-    padding: 14px 10px;
-    text-align: center;
-  }
-  .stat-value {
-    font-size: 20px; font-weight: 700;
-    color: var(--core);
-    line-height: 1.2;
-  }
-  .stat-label {
-    font-size: 11.5px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-  .deal-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13.5px;
-    margin-top: 4px;
-  }
-  .deal-table th, .deal-table td {
-    padding: 8px 10px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-  .deal-table th {
-    background: var(--core-bg);
-    color: var(--core);
-    font-weight: 600;
-    font-size: 12.5px;
-  }
-  .deal-table td:last-child { text-align: right; color: var(--muted); font-size: 12.5px; }
-  .deal-caption {
-    font-size: 12px;
-    color: var(--muted);
-    margin: 0 0 8px;
-    font-weight: 600;
-  }
-
-  /* ============ Floor 2 · 受益逻辑 ============ */
-  .benefit-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  .benefit-card {
-    background: var(--benefit-bg);
-    border-radius: 10px;
-    padding: 14px;
-    border-left: 3px solid var(--benefit);
-  }
-  .benefit-card-num {
-    display: inline-block;
-    width: 22px; height: 22px;
-    background: var(--benefit);
-    color: #fff;
-    border-radius: 6px;
-    text-align: center;
-    line-height: 22px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .benefit-card-title {
-    font-size: 14px; font-weight: 700;
-    color: var(--benefit);
-    margin: 0 0 6px;
-  }
-  .benefit-card-desc {
-    font-size: 13px;
+  .floor-tag-risk { background: var(--risk-bg); color: var(--risk); }
+  .floor-body {
+    font-size: 15px;
     color: #334155;
-    line-height: 1.65;
+    line-height: 1.85;
     margin: 0;
+    text-align: justify;
   }
-  .benefit-note {
-    font-size: 12px;
-    color: var(--muted);
-    margin: 12px 0 0;
-    font-style: italic;
-  }
-
-  /* ============ Floor 3 · 市场观察 ============ */
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-  }
-  .chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: var(--market-bg);
-    color: var(--market);
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .chip-num {
-    background: var(--market);
-    color: #fff;
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center; justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-  }
-  .sub-label {
-    font-size: 12px;
-    color: var(--muted);
+  .floor-body strong {
+    color: var(--accent);
     font-weight: 600;
-    margin: 12px 0 6px;
+    padding: 0 1px;
   }
 
-  /* ============ Floor 4 · 历史对标 timeline ============ */
-  .timeline {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 4px;
-    margin: 6px 0 14px;
-    position: relative;
-  }
-  .timeline::before {
-    content: "";
-    position: absolute;
-    top: 12px; left: 5%; right: 5%;
-    height: 2px;
-    background: var(--history-soft);
-    z-index: 0;
-  }
-  .timeline-step {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-  }
-  .timeline-dot {
-    width: 26px; height: 26px;
-    background: var(--card);
-    border: 2px solid var(--history);
-    border-radius: 50%;
-    margin: 0 auto 6px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--history);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .timeline-label {
-    font-size: 11.5px;
-    color: var(--text);
-    font-weight: 500;
-  }
-  .case-chips .chip {
-    background: var(--history-bg);
-    color: var(--history);
-  }
-
-  /* ============ Floor 5 · 风险 ============ */
-  .risk-list {
-    list-style: none; padding: 0; margin: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
+  /* ============ Risk 列表 ============ */
+  .risk-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
   .risk-item {
-    display: flex; gap: 10px;
-    padding: 10px 12px;
+    display: flex; gap: 12px;
+    padding: 11px 14px;
     background: var(--risk-bg);
-    border-radius: 8px;
+    border-radius: 10px;
     border-left: 3px solid var(--risk);
-    font-size: 13.5px;
+    font-size: 14px;
     color: #7f1d1d;
-    line-height: 1.65;
+    line-height: 1.7;
   }
   .risk-item-num {
     flex-shrink: 0;
     background: var(--risk);
     color: #fff;
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
     border-radius: 50%;
     font-size: 11px;
     font-weight: 700;
+    font-family: var(--font-mono);
     display: flex; align-items: center; justify-content: center;
   }
 
   /* ============ Footer ============ */
   .footer {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 20px 22px;
-    margin-top: 14px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-top: 16px;
     border: 1px solid var(--border);
+    animation: rise 0.55s ease-out 0.7s both;
+    opacity: 0;
   }
   .sources-title {
-    font-size: 13px;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    font-weight: 600;
     color: var(--text);
-    margin: 0 0 10px;
-    display: flex; align-items: center; gap: 6px;
+    margin: 0 0 12px;
+    display: flex; align-items: center; gap: 8px;
   }
   .sources-title::before {
     content: "";
-    width: 3px; height: 14px;
-    background: var(--core);
+    width: 4px; height: 16px;
+    background: var(--accent);
     border-radius: 2px;
   }
-  .sources-list {
-    list-style: none; padding: 0; margin: 0;
-  }
+  .sources-list { list-style: none; padding: 0; margin: 0; }
   .sources-list li {
-    padding: 6px 0;
+    padding: 7px 0;
     font-size: 13px;
     border-bottom: 1px dashed var(--border);
   }
   .sources-list li:last-child { border-bottom: none; }
-  .sources-list a {
-    color: var(--core);
-    text-decoration: none;
-  }
+  .sources-list a { color: var(--accent); text-decoration: none; }
   .sources-list a:hover { text-decoration: underline; }
   .disclaimer {
-    margin-top: 18px;
-    padding-top: 14px;
+    margin-top: 20px;
+    padding-top: 16px;
     border-top: 1px solid var(--border);
     font-size: 12px;
+    font-family: var(--font-mono);
     color: #94a3b8;
     text-align: center;
     line-height: 1.7;
+    letter-spacing: 0.03em;
   }
 
   /* ============ 移动端 ============ */
   @media (max-width: 640px) {
-    .page { padding: 16px 12px 40px; }
-    .hero { padding: 22px 18px; }
-    .hero-title { font-size: 22px; }
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
-    .benefit-grid { grid-template-columns: 1fr; }
-    .timeline { grid-template-columns: repeat(3, 1fr); gap: 12px 4px; }
-    .timeline::before { display: none; }
+    .page { padding: 18px 12px 40px; }
+    .hero { padding: 26px 20px; }
+    .hero-title { font-size: 25px; }
+    .hero-subtitle { font-size: 14.5px; }
+    .floor { padding: 18px 18px 14px; }
+    .floor:nth-child(even), .floor:nth-child(odd) { transform: none; }
+    body { font-size: 15.5px; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- Hero -->
   <header class="hero">
     <span class="hero-badge">3B · 资本市场制度利好</span>
     <h1 class="hero-title">东方拟购沪证，券商整合再落一子</h1>
     <p class="hero-subtitle">上海金融国资优化布局，合并重组如何影响资本市场改革？</p>
     <div class="hero-meta">
-      <span>事件时点：2026-04-19</span>
-      <span>撰写时点：2026-04-20</span>
-      <span>全文约 450 字</span>
+      <span>事件 · 2026-04-19</span>
+      <span>撰写 · 2026-04-20</span>
+      <span>450 字</span>
     </div>
   </header>
 
-  <!-- Floor 1 · 改革核心条款 -->
-  <section class="floor floor-1">
+
+  <section class="floor floor-1" style="animation-delay: 0.15s;">
     <div class="floor-head">
       <span class="floor-num">1</span>
       <h2 class="floor-title">改革核心条款</h2>
-      <span class="floor-tag">方案速览</span>
+      <span class="floor-tag">✦</span>
     </div>
-    <p class="lead-text">东方证券公告拟以"发行A股股份+支付现金"方式收购上海证券 100% 股权，4月20日起停牌不超过 10 个交易日。</p>
-
-    <div class="stat-grid">
-      <div class="stat">
-        <div class="stat-value">&gt;6000亿</div>
-        <div class="stat-label">合并后总资产</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">&gt;1000亿</div>
-        <div class="stat-label">净资产</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">~250家</div>
-        <div class="stat-label">分支机构</div>
-      </div>
-      <div class="stat">
-        <div class="stat-value">前十</div>
-        <div class="stat-label">行业排名</div>
-      </div>
-    </div>
-
-    <p class="deal-caption">交易对方及对价方式</p>
-    <table class="deal-table">
-      <thead>
-        <tr><th>交易对方</th><th>持股</th><th>对价</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>百联集团</td><td>50.00%</td><td>股份</td></tr>
-        <tr><td>上海国际集团投资</td><td>16.33%</td><td>股份</td></tr>
-        <tr><td>上海国际集团</td><td>7.68%</td><td>股份</td></tr>
-        <tr><td>上海城投集团</td><td>1.00%</td><td>股份</td></tr>
-        <tr><td>国泰海通</td><td>24.99%</td><td>股份 18.74% + 现金 6.25%</td></tr>
-      </tbody>
-    </table>
+    <p class="floor-body">2026年4月19日，东方证券公告拟通过&quot;发行A股股份+支付现金&quot;方式收购上海证券100%股权，4月20日起停牌不超过10个交易日。交易对方涵盖百联集团（50%）、上海国际集团投资（16.33%）、上海国际集团（7.68%）、上海城投（1%）以及国泰海通（18.74%股份+6.25%现金）五方。合并后东方证券资产总额有望突破 6000 亿元、净资产超千亿元、分支机构扩至 250 家左右，行业排名有望进入前十。</p>
   </section>
-
-  <!-- Floor 2 · 直接受益逻辑 -->
-  <section class="floor floor-2">
+  <section class="floor floor-2" style="animation-delay: 0.25s;">
     <div class="floor-head">
       <span class="floor-num">2</span>
       <h2 class="floor-title">直接受益逻辑</h2>
-      <span class="floor-tag">四条主体线</span>
+      <span class="floor-tag">❖</span>
     </div>
-    <div class="benefit-grid">
-      <div class="benefit-card">
-        <span class="benefit-card-num">1</span>
-        <p class="benefit-card-title">合并实体</p>
-        <p class="benefit-card-desc">资产规模跃升，零售网络与机构业务具备阶段性协同空间。</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-card-num">2</span>
-        <p class="benefit-card-title">上海金融国资参与方</p>
-        <p class="benefit-card-desc">百联、上海国际集团等实现沪证股权证券化退出，金融国资结构性优化。</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-card-num">3</span>
-        <p class="benefit-card-title">上海国际金融中心建设</p>
-        <p class="benefit-card-desc">官方定位"服务国家战略与上海国金中心建设"，与金融国资国企改革主线一致。</p>
-      </div>
-      <div class="benefit-card">
-        <span class="benefit-card-num">4</span>
-        <p class="benefit-card-title">券商并购主题方向</p>
-        <p class="benefit-card-desc">继国泰+海通、国联+民生、浙商+国都后，"做优做强头部券商"预期或进一步强化。</p>
-      </div>
-    </div>
-    <p class="benefit-note">以上仅为主体层逻辑，不涉及具体公司推荐。</p>
+    <p class="floor-body">从市场主体层面梳理四条受益线——① <strong>合并实体</strong>：资产规模跃升，零售网络与机构业务具备阶段性协同空间；② <strong>上海金融国资参与方</strong>：百联集团、上海国际集团等实现上海证券股权的证券化退出，完成金融国资的结构性优化；③ <strong>上海国际金融中心建设</strong>：本次合并被官方定位为&quot;服务国家战略和上海国际金融中心建设&quot;的重要举措，与上海金融国资国企改革主线一致；④ <strong>券商并购主题方向</strong>：继国泰+海通、国联+民生、浙商+国都之后，本次合并或进一步强化&quot;做优做强头部券商&quot;的政策预期，相关行业方向可关注。以上仅为主体层逻辑，不涉及具体公司推荐。</p>
   </section>
-
-  <!-- Floor 3 · 市场活跃度观察 -->
-  <section class="floor floor-3">
+  <section class="floor floor-3" style="animation-delay: 0.35s;">
     <div class="floor-head">
       <span class="floor-num">3</span>
       <h2 class="floor-title">市场活跃度观察</h2>
-      <span class="floor-tag">传导+抓手</span>
+      <span class="floor-tag">◆</span>
     </div>
-    <p class="lead-text">券商合并主题板块情绪发酵具备连续性，停牌期内具备合并预期的中小券商或受阶段性关注——尤其同地域（沪/京/粤）、同控股架构、具备国资背景的中小券商方向。</p>
-
-    <p class="sub-label">中期可观察的三项抓手</p>
-    <div class="chips">
-      <span class="chip"><span class="chip-num">1</span>协同效应兑现节奏</span>
-      <span class="chip"><span class="chip-num">2</span>行业集中度实际影响</span>
-      <span class="chip"><span class="chip-num">3</span>监管对券商并购后续态度</span>
-    </div>
+    <p class="floor-body">流动性→成交量→板块关注度的传导路径——券商合并主题在板块内的情绪发酵具备连续性，停牌期内具备合并预期的中小券商或受阶段性关注，尤其同地域（沪/京/粤）、同控股架构、具备国资背景的中小券商方向。中期可观察三项抓手：合并后协同效应兑现节奏、头部券商整合对行业集中度的实际影响、监管对券商并购的后续态度。</p>
   </section>
-
-  <!-- Floor 4 · 历史对标 -->
-  <section class="floor floor-4">
+  <section class="floor floor-4" style="animation-delay: 0.45000000000000007s;">
     <div class="floor-head">
       <span class="floor-num">4</span>
       <h2 class="floor-title">历史对标</h2>
-      <span class="floor-tag">六阶段路径</span>
+      <span class="floor-tag">◎</span>
     </div>
-    <p class="lead-text">历史上类似情形中，券商合并方案自公告至落地通常呈以下六阶段演进，每一阶段的情绪节奏与基本面影响存在差异。</p>
-
-    <div class="timeline">
-      <div class="timeline-step"><div class="timeline-dot">1</div><div class="timeline-label">公告</div></div>
-      <div class="timeline-step"><div class="timeline-dot">2</div><div class="timeline-label">停牌</div></div>
-      <div class="timeline-step"><div class="timeline-dot">3</div><div class="timeline-label">方案出具</div></div>
-      <div class="timeline-step"><div class="timeline-dot">4</div><div class="timeline-label">复牌</div></div>
-      <div class="timeline-step"><div class="timeline-dot">5</div><div class="timeline-label">审批过会</div></div>
-      <div class="timeline-step"><div class="timeline-dot">6</div><div class="timeline-label">实质合并</div></div>
-    </div>
-
-    <p class="sub-label">近年可比案例（仅供参考）</p>
-    <div class="chips case-chips">
-      <span class="chip">国泰 + 海通</span>
-      <span class="chip">国联 + 民生</span>
-      <span class="chip">浙商 + 国都</span>
-    </div>
-    <p class="benefit-note">行业主题发酵与合并后业务整合节奏之间存在明显时滞，具体走向以公司公告与监管审批为准。</p>
+    <p class="floor-body">历史上类似情形中，券商合并方案自公告至落地通常呈&quot;公告→停牌→方案出具→复牌→审批过会→实质合并&quot;多阶段，每一阶段情绪节奏与基本面影响存在差异；参考国泰+海通、国联+民生等近年案例，行业主题发酵与合并后业务整合节奏之间存在明显时滞，具体走向以公司公告与监管审批为准。</p>
   </section>
 
-  <!-- Floor 5 · 风险与局限 -->
-  <section class="floor floor-5">
+  <section class="floor floor-risk" style="animation-delay: 0.55s;">
     <div class="floor-head">
-      <span class="floor-num">5</span>
+      <span class="floor-num floor-num-risk">5</span>
       <h2 class="floor-title">风险与局限</h2>
-      <span class="floor-tag">五项关注</span>
+      <span class="floor-tag floor-tag-risk">需留意</span>
     </div>
     <ul class="risk-list">
-      <li class="risk-item"><span class="risk-item-num">1</span>交易尚处停牌筹划阶段，最终方案存在调整或终止可能，以正式公告为准。</li>
-      <li class="risk-item"><span class="risk-item-num">2</span>审批流程具不确定性，时间周期存在变数。</li>
-      <li class="risk-item"><span class="risk-item-num">3</span>合并后业务协同兑现需时间验证。</li>
-      <li class="risk-item"><span class="risk-item-num">4</span>市场对并购主题预期已部分反映。</li>
+      
+      <li class="risk-item"><span class="risk-item-num">1</span>交易尚处停牌筹划阶段，最终方案存在调整或终止可能，以正式公告为准</li>
+      <li class="risk-item"><span class="risk-item-num">2</span>审批流程具不确定性</li>
+      <li class="risk-item"><span class="risk-item-num">3</span>合并后业务协同兑现需时间验证</li>
+      <li class="risk-item"><span class="risk-item-num">4</span>市场对并购主题预期已部分反映</li>
       <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
     </ul>
   </section>
 
-  <!-- Footer · Sources + Disclaimer -->
   <footer class="footer">
+    
     <p class="sources-title">信息来源</p>
     <ul class="sources-list">
-      <li><a href="https://www.stcn.com/article/detail/3763773.html" target="_blank" rel="noopener">东方证券拟收购上海证券100%股权 · 证券时报</a></li>
-      <li><a href="https://finance.sina.com.cn/tech/roll/2026-04-19/doc-inhuznny4640995.shtml" target="_blank" rel="noopener">V观财报｜东方证券拟收购上海证券100%股权，明起停牌 · 新浪科技</a></li>
-      <li><a href="https://finance.sina.com.cn/stock/marketresearch/2026-04-19/doc-inhuznpc9302805.shtml" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组：合并后总资产突破6000亿 · 新浪财经</a></li>
-      <li><a href="https://www.nbd.com.cn/articles/2026-04-19/4345976.html" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组，加快推进一流现代投资银行建设 · 每日经济新闻</a></li>
-      <li><a href="https://m.thepaper.cn/newsDetail_forward_33005196" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组，4月20日开市起停牌 · 澎湃新闻</a></li>
+      <li><a href="https://www.stcn.com/article/detail/3763773.html" target="_blank" rel="noopener">东方证券拟收购上海证券100%股权 · 证券时报</a></li><li><a href="https://finance.sina.com.cn/tech/roll/2026-04-19/doc-inhuznny4640995.shtml" target="_blank" rel="noopener">V观财报｜券商并购又一例，东方证券拟收购上海证券100%股权，明起停牌 · 新浪科技</a></li><li><a href="https://finance.sina.com.cn/stock/marketresearch/2026-04-19/doc-inhuznpc9302805.shtml" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组：合并后总资产突破6000亿 · 新浪财经</a></li><li><a href="https://www.nbd.com.cn/articles/2026-04-19/4345976.html" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组，加快推进一流现代投资银行建设 · 每日经济新闻</a></li><li><a href="https://m.thepaper.cn/newsDetail_forward_33005196" target="_blank" rel="noopener">东方证券与上海证券筹划合并重组，4月20日开市起停牌 · 澎湃新闻</a></li>
     </ul>
     <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
   </footer>

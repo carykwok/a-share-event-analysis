@@ -88,7 +88,19 @@ Claude 会自动：分类 → 联网搜索 → 按对应模板生成稿件。
 | Markdown 源稿 | `docs/posts/YYYY-MM-DD-<slug>.md` | 带 frontmatter 的版本化源稿，供归档/检索/二次加工 |
 | HTML 页面代码 | `export/YYYY-MM-DD/NN-<slug>.html` | 20–30KB 自包含单文件，可直接复制到页面平台 |
 
-HTML 页面的 UI 规范参考 Anthropic [frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) skill，**强制 7 楼层结构 + 10 大类色彩主题 + 避免 AI 套路化美学**（详见 SKILL.md Step 6）。
+HTML 页面的 UI 规范参考 Anthropic [frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) skill，**强制 7 楼层结构 + 20 子类色彩主题 + 避免 AI 套路化美学**（详见 SKILL.md Step 6）。
+
+### 一键生成页面：scripts/page-builder.mjs
+
+```bash
+# 单篇
+node scripts/page-builder.mjs docs/posts/2026-04-21-lithium-q1-earnings-surge.md
+
+# 批量（扫描 docs/posts/ + examples/）
+node scripts/page-builder.mjs --all
+```
+
+**脚本能力**：解析 YAML frontmatter → 按 `category` 自动匹配 20 子类色彩主题 → 按 Hero + N 楼层 + Footer 结构渲染 HTML → 自动编号存入 `export/YYYY-MM-DD/NN-<slug>.html`。输出含 gradient mesh、噪点纹理、非对称卡片、staggered 入场动画、自定义 Fraunces/JetBrains Mono 字体，严格规避 Inter/Roboto 与白底紫渐变等 AI 套路。
 
 ## 产出示范
 
