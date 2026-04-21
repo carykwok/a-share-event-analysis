@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>锂电业绩共振，产业链关注回升</title>
+<style>
+  :root {
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+
+    --core: #2563eb;     --core-bg: #eff6ff;     --core-soft: #dbeafe;
+    --benefit: #059669;  --benefit-bg: #ecfdf5;  --benefit-soft: #d1fae5;
+    --market: #ea580c;   --market-bg: #fff7ed;   --market-soft: #fed7aa;
+    --history: #7c3aed;  --history-bg: #f5f3ff;  --history-soft: #ddd6fe;
+    --risk: #dc2626;     --risk-bg: #fef2f2;     --risk-soft: #fecaca;
+    --accent: #0891b2;   --accent-bg: #ecfeff;
+
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15.5px;
+  }
+  .page { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+
+  /* ============ Hero ============ */
+  .hero {
+    background: linear-gradient(135deg, #0f766e 0%, #10b981 50%, #a7f3d0 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+    position: relative; z-index: 1;
+  }
+  .hero-title {
+    font-size: 26px; font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 10px;
+    position: relative; z-index: 1;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 400;
+    margin: 0 0 14px;
+    line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+  .hero-meta {
+    display: flex; gap: 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    flex-wrap: wrap;
+    position: relative; z-index: 1;
+  }
+  .hero-meta span::before { content: "·  "; }
+  .hero-meta span:first-child::before { content: ""; }
+
+  /* ============ Floor (共用) ============ */
+  .floor {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px 22px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    border: 1px solid var(--border);
+  }
+  .floor-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .floor-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    color: #fff;
+  }
+  .floor-title {
+    font-size: 17px; font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    flex: 1;
+  }
+  .floor-tag {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .floor-1 .floor-num { background: var(--core); }
+  .floor-1 .floor-tag { background: var(--core-bg); color: var(--core); }
+  .floor-2 .floor-num { background: var(--benefit); }
+  .floor-2 .floor-tag { background: var(--benefit-bg); color: var(--benefit); }
+  .floor-3 .floor-num { background: var(--market); }
+  .floor-3 .floor-tag { background: var(--market-bg); color: var(--market); }
+  .floor-4 .floor-num { background: var(--history); }
+  .floor-4 .floor-tag { background: var(--history-bg); color: var(--history); }
+  .floor-5 .floor-num { background: var(--risk); }
+  .floor-5 .floor-tag { background: var(--risk-bg); color: var(--risk); }
+
+  .lead-text {
+    font-size: 14.5px; color: var(--muted); line-height: 1.75;
+    margin: 0 0 16px;
+  }
+
+  /* ============ Floor 1 · 核心业绩 ============ */
+  .stat-grid-big {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .stat-big {
+    background: linear-gradient(135deg, var(--core-bg) 0%, #dbeafe 100%);
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid var(--core);
+  }
+  .stat-big-value {
+    font-size: 24px; font-weight: 700;
+    color: var(--core);
+    line-height: 1.2;
+  }
+  .stat-big-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .stat-big-delta {
+    font-size: 13px;
+    color: #059669;
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .industry-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .industry-card {
+    background: var(--accent-bg);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #cffafe;
+  }
+  .industry-value {
+    font-size: 16px; font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .industry-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .industry-sub {
+    font-size: 10.5px;
+    color: var(--accent);
+    margin-top: 2px;
+    opacity: 0.8;
+  }
+
+  /* ============ Floor 2 · 上游环节 ============ */
+  .chain-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .chain-card {
+    background: var(--benefit-bg);
+    border-radius: 10px;
+    padding: 14px;
+    border-left: 3px solid var(--benefit);
+  }
+  .chain-card-num {
+    display: inline-block;
+    width: 22px; height: 22px;
+    background: var(--benefit);
+    color: #fff;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .chain-card-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--benefit);
+    margin: 0 0 6px;
+  }
+  .chain-card-desc {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.65;
+    margin: 0;
+  }
+  .benefit-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin: 12px 0 0;
+    font-style: italic;
+  }
+
+  /* ============ Floor 3 · 下游压力（量价齐升可视化）============ */
+  .balance-box {
+    background: linear-gradient(135deg, var(--market-bg) 0%, #ffedd5 100%);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--market);
+  }
+  .balance-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .balance-label {
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--market);
+    width: 70px;
+  }
+  .balance-bar-bg {
+    flex: 1;
+    height: 18px;
+    background: rgba(234, 88, 12, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .balance-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--market) 0%, #fb923c 100%);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 8px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .balance-caption {
+    font-size: 12.5px;
+    color: #7c2d12;
+    margin-top: 4px;
+    line-height: 1.6;
+  }
+
+  /* ============ Floor 4 · 周期判断 ============ */
+  .cycle-flow {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--history-bg);
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--history);
+  }
+  .cycle-step {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid var(--history-soft);
+  }
+  .cycle-step-title {
+    font-size: 12px;
+    color: var(--history);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .cycle-step-value {
+    font-size: 13px;
+    color: #1e293b;
+    font-weight: 700;
+  }
+  .cycle-arrow {
+    color: var(--history);
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--history-bg);
+    color: var(--history);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--history-soft);
+  }
+  .chip-num {
+    background: var(--history);
+    color: #fff;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .sub-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 12px 0 6px;
+  }
+
+  /* ============ Floor 5 · 风险 ============ */
+  .risk-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .risk-item {
+    display: flex; gap: 10px;
+    padding: 10px 12px;
+    background: var(--risk-bg);
+    border-radius: 8px;
+    border-left: 3px solid var(--risk);
+    font-size: 13.5px;
+    color: #7f1d1d;
+    line-height: 1.65;
+  }
+  .risk-item-num {
+    flex-shrink: 0;
+    background: var(--risk);
+    color: #fff;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ============ Footer ============ */
+  .footer {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-top: 14px;
+    border: 1px solid var(--border);
+  }
+  .sources-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sources-title::before {
+    content: "";
+    width: 3px; height: 14px;
+    background: var(--benefit);
+    border-radius: 2px;
+  }
+  .sources-list {
+    list-style: none; padding: 0; margin: 0;
+  }
+  .sources-list li {
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .sources-list li:last-child { border-bottom: none; }
+  .sources-list a {
+    color: var(--benefit);
+    text-decoration: none;
+  }
+  .sources-list a:hover { text-decoration: underline; }
+  .disclaimer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: #94a3b8;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  /* ============ 移动端 ============ */
+  @media (max-width: 640px) {
+    .page { padding: 16px 12px 40px; }
+    .hero { padding: 22px 18px; }
+    .hero-title { font-size: 22px; }
+    .stat-grid-big { grid-template-columns: 1fr; }
+    .chain-grid { grid-template-columns: 1fr; }
+    .industry-grid { grid-template-columns: 1fr; }
+    .cycle-flow { flex-direction: column; align-items: stretch; }
+    .cycle-arrow { transform: rotate(90deg); text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="hero-badge">10B · 工业金属 · 锂</span>
+    <h1 class="hero-title">锂电业绩共振，产业链关注回升</h1>
+    <p class="hero-subtitle">龙头业绩预增 15 倍，锂电产业链量价齐升的底层逻辑</p>
+    <div class="hero-meta">
+      <span>事件时点：2026-04-20</span>
+      <span>撰写时点：2026-04-21</span>
+      <span>全文约 400 字</span>
+    </div>
+  </header>
+
+  <!-- Floor 1 · 核心业绩数据 -->
+  <section class="floor floor-1">
+    <div class="floor-head">
+      <span class="floor-num">1</span>
+      <h2 class="floor-title">价格驱动 · 龙头 Q1 业绩</h2>
+      <span class="floor-tag">业绩速览</span>
+    </div>
+    <p class="lead-text">2026年4月20日，锂矿龙头公告 2026 年第一季度业绩预告，驱动因素来自锂产品销售均价明显增长、联营公司 SQM 投资收益大增、新能源下游需求回暖。</p>
+
+    <div class="stat-grid-big">
+      <div class="stat-big">
+        <div class="stat-big-value">17—20亿</div>
+        <div class="stat-big-label">Q1 归母净利润（预告）</div>
+        <div class="stat-big-delta">同比 +1530% ~ +1818%</div>
+      </div>
+      <div class="stat-big">
+        <div class="stat-big-value">16—19.6亿</div>
+        <div class="stat-big-label">Q1 扣非净利（预告）</div>
+        <div class="stat-big-delta">同比 +3502% ~ +4312%</div>
+      </div>
+    </div>
+
+    <p class="sub-label">产业链量价信号</p>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <div class="industry-value">15万</div>
+        <div class="industry-label">电池级碳酸锂 元/吨</div>
+        <div class="industry-sub">行业"舒适区"</div>
+      </div>
+      <div class="industry-card">
+        <div class="industry-value">235 GWh</div>
+        <div class="industry-label">4月 锂电排产</div>
+        <div class="industry-sub">环比 +7.3%</div>
+      </div>
+      <div class="industry-card">
+        <div class="industry-value">+60~70%</div>
+        <div class="industry-label">5月排产 同比</div>
+        <div class="industry-sub">环比 +5~10%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floor 2 · 上游产业链环节 -->
+  <section class="floor floor-2">
+    <div class="floor-head">
+      <span class="floor-num">2</span>
+      <h2 class="floor-title">上游弹性 · 产业链四层</h2>
+      <span class="floor-tag">环节梳理</span>
+    </div>
+    <div class="chain-grid">
+      <div class="chain-card">
+        <span class="chain-card-num">1</span>
+        <p class="chain-card-title">一体化锂矿龙头环节</p>
+        <p class="chain-card-desc">锂矿自给率较高，业绩弹性相对较大，锂盐价格回暖直接映射至利润端。</p>
+      </div>
+      <div class="chain-card">
+        <span class="chain-card-num">2</span>
+        <p class="chain-card-title">纯锂盐加工环节</p>
+        <p class="chain-card-desc">依赖外购矿，毛利对矿端价格更敏感；矿价扰动是核心观察变量。</p>
+      </div>
+      <div class="chain-card">
+        <span class="chain-card-num">3</span>
+        <p class="chain-card-title">海外锂矿权益方环节</p>
+        <p class="chain-card-desc">享受海外矿价与人民币汇率的双重因素影响，联营投资收益贡献可观。</p>
+      </div>
+      <div class="chain-card">
+        <span class="chain-card-num">4</span>
+        <p class="chain-card-title">储能+动力电池头部环节</p>
+        <p class="chain-card-desc">头部电池企业 Q1 销量已超 200 GWh，营收与净利同步高增。</p>
+      </div>
+    </div>
+    <p class="benefit-note">以上为产业环节层面观察，不涉及具体公司推荐。</p>
+  </section>
+
+  <!-- Floor 3 · 下游压力 · 量价齐升可视化 -->
+  <section class="floor floor-3">
+    <div class="floor-head">
+      <span class="floor-num">3</span>
+      <h2 class="floor-title">下游压力 · 量价齐升</h2>
+      <span class="floor-tag">上下游均衡</span>
+    </div>
+
+    <div class="balance-box">
+      <div class="balance-row">
+        <div class="balance-label">锂价回升</div>
+        <div class="balance-bar-bg"><div class="balance-bar" style="width: 65%;">15 万/吨 · 舒适区</div></div>
+      </div>
+      <div class="balance-row">
+        <div class="balance-label">下游成本</div>
+        <div class="balance-bar-bg"><div class="balance-bar" style="width: 42%;">温和上行</div></div>
+      </div>
+      <div class="balance-row">
+        <div class="balance-label">终端价格</div>
+        <div class="balance-bar-bg"><div class="balance-bar" style="width: 25%;">未明显压力</div></div>
+      </div>
+      <p class="balance-caption">锂价从低位回升至 15 万元/吨"舒适区"，上下游利益分配趋于均衡；对下游锂电池、新能源车、储能系统的成本端影响相对温和，量价齐升格局或延续。</p>
+    </div>
+  </section>
+
+  <!-- Floor 4 · 周期判断 -->
+  <section class="floor floor-4">
+    <div class="floor-head">
+      <span class="floor-num">4</span>
+      <h2 class="floor-title">周期判断 · 紧平衡回归</h2>
+      <span class="floor-tag">前低后高</span>
+    </div>
+    <p class="lead-text">机构观点偏向"紧平衡"——2026 年锂资源或从供给过剩重回紧平衡状态，呈"前低后高"节奏。</p>
+
+    <div class="cycle-flow">
+      <div class="cycle-step">
+        <div class="cycle-step-title">2025</div>
+        <div class="cycle-step-value">供给过剩</div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step">
+        <div class="cycle-step-title">2026 H1</div>
+        <div class="cycle-step-value">新增供给偏低</div>
+      </div>
+      <div class="cycle-arrow">→</div>
+      <div class="cycle-step">
+        <div class="cycle-step-title">2026 H2</div>
+        <div class="cycle-step-value">供给释放较多</div>
+      </div>
+    </div>
+
+    <p class="sub-label">中期可观察的三项抓手</p>
+    <div class="chips">
+      <span class="chip"><span class="chip-num">1</span>电池级碳酸锂现货价走势</span>
+      <span class="chip"><span class="chip-num">2</span>锂电月度排产数据</span>
+      <span class="chip"><span class="chip-num">3</span>储能装机与新能源车销量</span>
+    </div>
+    <p class="benefit-note">矿山端（锂盐均价敏感）与冶炼加工端（加工费+产能利用率敏感）的业绩逻辑存在差异，具体走向以行业数据与公司公告为准。</p>
+  </section>
+
+  <!-- Floor 5 · 风险提示 -->
+  <section class="floor floor-5">
+    <div class="floor-head">
+      <span class="floor-num">5</span>
+      <h2 class="floor-title">风险提示</h2>
+      <span class="floor-tag">五项关注</span>
+    </div>
+    <ul class="risk-list">
+      <li class="risk-item"><span class="risk-item-num">1</span>业绩预告与正式年报数据可能存在差异，以最终披露为准。</li>
+      <li class="risk-item"><span class="risk-item-num">2</span>下半年新增供给释放或对锂价形成压制。</li>
+      <li class="risk-item"><span class="risk-item-num">3</span>新能源下游需求增速不及预期的扰动。</li>
+      <li class="risk-item"><span class="risk-item-num">4</span>海外锂矿权益方投资收益受当地政策、汇率、矿权变更等因素影响。</li>
+      <li class="risk-item"><span class="risk-item-num">5</span>相关板块股价存在阶段性波动风险。</li>
+    </ul>
+  </section>
+
+  <!-- Footer · Sources + Disclaimer -->
+  <footer class="footer">
+    <p class="sources-title">信息来源</p>
+    <ul class="sources-list">
+      <li><a href="https://www.stcn.com/article/detail/3766095.html" target="_blank" rel="noopener">天齐锂业：预计首季净利润17.00亿元—20.00亿元 同比增1530.31%—1818.01% · 证券时报</a></li>
+      <li><a href="https://finance.sina.com.cn/tech/roll/2026-04-21/doc-inhvfivq7047558.shtml" target="_blank" rel="noopener">锂价回暖引爆业绩，千亿巨头天齐锂业一季度净利预增超15倍 · 新浪科技</a></li>
+      <li><a href="https://paper.cnstock.com/html/2026-04/01/content_2195326.htm" target="_blank" rel="noopener">业绩喜报频传 锂价稳站"舒适区" 碳酸锂行业或迎新变化 · 上海证券报</a></li>
+      <li><a href="https://finance.sina.com.cn/jjxw/2026-04-17/doc-inhutspq2533478.shtml" target="_blank" rel="noopener">受益于锂价上涨 赣锋锂业预计一季度扭亏为盈 · 新浪财经</a></li>
+      <li><a href="https://paper.cnstock.com/html/2026-01/27/content_2174624.htm" target="_blank" rel="noopener">2026年碳酸锂基本面或重归紧平衡 · 上海证券报</a></li>
+    </ul>
+    <p class="disclaimer">本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。</p>
+  </footer>
+
+</div>
+</body>
+</html>

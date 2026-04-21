@@ -79,6 +79,17 @@ Claude 会自动：分类 → 联网搜索 → 按对应模板生成稿件。
 - 文末附 Sources 区便于复核
 - 文末固定附免责声明
 
+## 双交付物（Step 3 + Step 6）
+
+每次调用 skill 会同步产出两份内容，形成对客端完整闭环：
+
+| 产物 | 路径 | 用途 |
+|---|---|---|
+| Markdown 源稿 | `docs/posts/YYYY-MM-DD-<slug>.md` | 带 frontmatter 的版本化源稿，供归档/检索/二次加工 |
+| HTML 页面代码 | `export/YYYY-MM-DD/NN-<slug>.html` | 20–30KB 自包含单文件，可直接复制到页面平台 |
+
+HTML 页面的 UI 规范参考 Anthropic [frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) skill，**强制 7 楼层结构 + 10 大类色彩主题 + 避免 AI 套路化美学**（详见 SKILL.md Step 6）。
+
 ## 产出示范
 
 `examples/` 目录收录若干实战产出样例，用于对齐颗粒度与字数：

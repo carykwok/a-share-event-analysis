@@ -66,14 +66,17 @@ description: |
 
 **例外**：用户主动补充/修正信息时，以用户输入为最高优先级。
 
-### Step 3 — 按模板生成
+### Step 3 — 按模板生成 Markdown 稿件
 
-严格执行选定子类型对应的 Prompt（见本文件下半部分【完整模板库（20 子类）】章节），产出结构化报告：
+严格执行选定子类型对应的 Prompt（见本文件下半部分【完整模板库（20 子类）】章节），产出结构化 Markdown 稿件：
 
 - **主标题**（≤15 字）
 - **副标题**（20–35 字）
 - **正文**（按模板规定字数与分段结构，每段字数符合要求）
 - **风险提示**
+- **YAML frontmatter**（title / subtitle / event / category / event_date / publish_date / word_count）
+
+**保存路径**：`docs/posts/YYYY-MM-DD-<slug>.md`
 
 ### Step 4 — 合规红线（对客端强制，不可突破）
 
@@ -113,6 +116,76 @@ description: |
 - 地缘/监管类保持政治中立，聚焦市场影响
 - **文末附 Sources 区**：列出所用一/二级权威信息源的 markdown 链接，便于复核
 - **文末附免责声明**：固定一句"本文仅为信息梳理与行业观察，不构成任何投资建议，市场有风险，决策需谨慎。"
+
+### Step 6 — 生成对客端页面（强制，与 Step 3 一同交付）
+
+每次 Markdown 稿件完成后，**必须同步生成一份可复制到页面平台的自包含单文件 HTML**，保存至 `export/YYYY-MM-DD/NN-<slug>.html`。页面需同时满足"内容楼层化"与"UI 规范避套路"两项要求。
+
+#### 6.1 楼层结构（固定 7 层）
+
+| 层 | 承载内容 | 可视化建议 |
+|---|---|---|
+| Hero | 分类 Badge · 主标题 · 副标题 · 元数据 | 按事件色系的主题渐变、右上角光晕 |
+| Floor 1 | 核心事实 / 业绩数据 / 政策要点 | 2–4 个大数字卡片 + 关键指标 mini 卡 |
+| Floor 2 | 产业链 / 受益主体拆解 | 2×N 卡片网格或横向环节卡 |
+| Floor 3 | 市场节奏 / 下游传导 | chips 胶囊、横向进度条、双期卡片 |
+| Floor 4 | 历史对标 / 周期判断 | timeline 时间轴、流程图、对照 chips |
+| Floor 5 | 风险提示 | 5 项编号列表（红底边条） |
+| Footer | Sources + 固定免责声明 | 浅灰底、链接可点击 |
+
+#### 6.2 UI 规范（参考 Anthropic [frontend-design](https://github.com/anthropics/skills/tree/main/skills/frontend-design) skill，嵌入核心要点）
+
+**避免 AI 通病（硬禁用）**：
+- ❌ 泛用字体：Inter / Roboto / Arial / system-ui 单独使用
+- ❌ 套路配色：白底紫渐变、全灰白 SaaS 风、默认 Bootstrap 蓝
+- ❌ 均匀网格无节奏：所有卡片等宽等高铺满
+- ❌ 纯色背景无纹理
+
+**字体搭配**（中英混排）：
+- 中文：PingFang SC / Hiragino Sans GB / 华文细黑 / Source Han Serif 混排，标题可用思源宋体/霞鹜文楷增加性格
+- 英文：Fraunces / Instrument Serif / JetBrains Mono / IBM Plex Sans/Serif，标题用 display 字体、正文用 refined serif/sans
+- 数字：SF Mono / JetBrains Mono 等等宽字体强化业绩数据的工程感
+
+**色彩主题**（按 10 大类选定 bold direction，一个事件一种调性）：
+
+| 分类 | 主调 | 副调 | 气质 |
+|---|---|---|---|
+| 1 货币财政 | 学术靛蓝 | 印刷灰 | 稳健制度 |
+| 2 产业催化 | 活力柑橘 | 深墨绿 | 产业向上 |
+| 3 监管整顿 | 刚正靛青 | 克制象牙白 | 边界分明 |
+| 4 地缘政治 | 冷铸钢灰 | 警示朱红 | 紧绷冷峻 |
+| 5 贸易摩擦 | 关税橄榄黄 | 出口深蓝 | 国际博弈 |
+| 6 会议定调 | 庄红 | 金箔米 | 权威定调 |
+| 7A AI/芯片 | 油墨黑 | 霓虹青柠 | 赛博前沿 |
+| 7B 新能源/生物 | 墨绿 | 薄荷渐变 | 技术生长 |
+| 8 黑天鹅 | 暴雨灰 | 预警绯 | 克制警示 |
+| 9 海外联动 | 深海蓝 | 星尘白 | 全球视角 |
+| 10A 原油 | 能源铜 | 岩层赭 | 资源重量 |
+| 10B 工业/贵金属 | 冷光银 / 墨绿（锂） | 金箔 / 薄荷 | 金属冷感 |
+
+**视觉细节**：
+- 非对称布局：Hero 右上角光晕、卡片交错缩进、chips 不齐行
+- 渐变网格（gradient mesh）背景 + 噪点纹理，替代纯色
+- Floor 之间留足呼吸空间（gap 14—16px）、卡片内生成层级
+- staggered CSS 入场动画（animation-delay 错峰，0.1s/0.2s/0.3s…）
+- 大数字用特大字号（20—24px）+ 色系强化
+- 移动端：4 列 → 2 列 → 单列渐进降级
+
+**单篇规格约束**：
+- 自包含单文件 HTML（含内联 `<style>`，无外部 CDN、无外部 CSS/JS）
+- 体量控制在 20—30 KB
+- 含 `<meta name="viewport">` 移动端自适应
+- 无 JavaScript 或仅 CSS-only 动效
+- 结尾 `<footer>` 固定免责声明
+
+#### 6.3 产物清单
+
+| 路径 | 内容 |
+|---|---|
+| `docs/posts/YYYY-MM-DD-<slug>.md` | Markdown 源稿（带 frontmatter） |
+| `export/YYYY-MM-DD/NN-<slug>.html` | 可复制到页面平台的单文件 HTML |
+
+交付时在对话中同时提供 markdown 源稿预览、HTML 路径、浏览器预览命令。
 
 ## 分类速查
 
