@@ -38,7 +38,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 
 // ============================================================
-// 20 子类色彩主题（对齐 SKILL.md Step 6.2）
+// 20 普通事件子类 + 3 人物讲话类色彩主题（对齐 SKILL.md Step 6.2 / 11 类）
 // ============================================================
 const THEMES = {
   '1A': { hero: ['#0c1e4e', '#1e3a8a', '#3b82f6'], accent: '#1e40af', soft: '#dbeafe', cat: '货币政策宽松', tag: '1A' },
@@ -61,6 +61,9 @@ const THEMES = {
   '9B': { hero: ['#0c1e4e', '#2563eb', '#93c5fd'], accent: '#1d4ed8', soft: '#dbeafe', cat: '人民币汇率大幅波动', tag: '9B' },
   '10A': { hero: ['#431407', '#9a3412', '#f97316'], accent: '#9a3412', soft: '#ffedd5', cat: '原油价格暴涨/暴跌', tag: '10A' },
   '10B': { hero: ['#0f766e', '#10b981', '#a7f3d0'], accent: '#047857', soft: '#d1fae5', cat: '工业金属/贵金属异动', tag: '10B' },
+  '11A': { hero: ['#4c0519', '#9f1239', '#fbbf24'], accent: '#9f1239', soft: '#fff7ed', cat: '权威人物口径变化', tag: '11A' },
+  '11B': { hero: ['#022c22', '#0f766e', '#22d3ee'], accent: '#0f766e', soft: '#ccfbf1', cat: '产业领袖/公司信号', tag: '11B' },
+  '11C': { hero: ['#1e1b4b', '#4338ca', '#a78bfa'], accent: '#4338ca', soft: '#ede9fe', cat: '市场观点信号', tag: '11C' },
 };
 
 // ============================================================
@@ -82,9 +85,10 @@ function parseFrontmatter(raw) {
 }
 
 function parseBody(body) {
-  // 一个 section = 一个 **XXX**：... 直到下一个 **标题** 或 === 或 --- 为止
+  // 一个 section = 一个 **XXX**：... 或独立加粗标题 **XXX** 后接正文。
+  // 兼容 11 类人物讲话模板的四段式写法。
   const sections = [];
-  const reSection = /(?:^|\n)\*\*([^*\n]+?)\*\*\s*[：:]\s*([\s\S]+?)(?=\n\s*\n?\*\*[^*\n]+?\*\*\s*[：:]|\n\s*###\s|\n\s*---\s*\n|\n\s*\*本文|$)/g;
+  const reSection = /(?:^|\n)\*\*([^*\n]+?)\*\*\s*(?:[：:]\s*|\n+)([\s\S]+?)(?=\n\s*\n?\*\*[^*\n]+?\*\*\s*(?:[：:]|\n+)|\n\s*###\s|\n\s*---\s*\n|\n\s*\*本文|$)/g;
   let match;
   while ((match = reSection.exec(body)) !== null) {
     sections.push({
@@ -1075,10 +1079,13 @@ function parseRiskItems(content) {
 function renderHTML({ fm, sections, sources }) {
   const catCode = (fm.category || '').split('-')[0].trim() || '1A';
   const theme = THEMES[catCode] || THEMES['1A'];
+  const isSpeechCategory = /^11[ABC]$/.test(catCode);
   const riskSection = sections.find(s => isRiskSection(s.title));
   const bodySections = sections.filter(s => !isRiskSection(s.title));
   const floors = bodySections.slice(0, 5);
-  const floorTags = ['方案速览', '主体拆解', '传导观察', '节奏/周期', '信号梳理'];
+  const floorTags = isSpeechCategory
+    ? ['快速定位', '背景脉络', '原话拆解', 'A股观察', '信号验证']
+    : ['方案速览', '主体拆解', '传导观察', '节奏/周期', '信号梳理'];
 
   const title = fm.title || '未命名解读';
   const subtitle = fm.subtitle || '';
